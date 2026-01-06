@@ -1,5 +1,5 @@
-# Ivo Karya E-Commerce Platform 🚀
-> *Bridging the gap between production capacity and digital sales performance.*
+# Platform E-Commerce Ivo Karya 🚀
+> *Menjembatani kesenjangan antara kapasitas produksi dan kinerja penjualan digital.*
 
 ![Project Banner](https://img.shields.io/badge/Status-Active_Development-success?style=for-the-badge)
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
@@ -7,79 +7,79 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 
-## 📖 Introduction
+## 📖 Pendahuluan
 
-**Ivo Karya E-Commerce** is a premium digital platform designed to solve a critical business challenge for UMKM in Sidenreng Rappang. Specifically, it addresses the disparity between the **50kg production capacity** of Abon Ikan/Sapi and the current **37kg sales volume**.
+**Ivo Karya E-Commerce** adalah platform digital premium yang dirancang untuk memecahkan tantangan bisnis kritis bagi UMKM di Sidenreng Rappang. Secara khusus, proyek ini mengatasi disparitas antara **kapasitas produksi 50kg** Abon Ikan/Sapi dan **volume penjualan saat ini yang hanya 37kg**.
 
-By transitioning from conventional sales to a high-end, automated digital storefront, this project aims to maximize market reach, streamline operations, and elevate the *Ivo Karya* brand image to a premium level.
+Dengan beralih dari penjualan konvensional ke etalase digital yang canggih dan otomatis, proyek ini bertujuan untuk memaksimalkan jangkauan pasar, merampingkan operasional, dan mengangkat citra merek *Ivo Karya* ke level premium.
 
-**Developer**: Mustari Syahding (KS1122016)  
-**Institution**: Universitas Ichsan Sidenreng Rappang
+**Pengembang**: Mustari Syahding (KS1122016)  
+**Institusi**: Universitas Ichsan Sidenreng Rappang
 
 ---
 
-## 🛠 Tech Stack Detail
+## 🛠 Detail Teknologi
 
-Built on the robust **TALL Stack** ecosystem, ensuring performance, scalability, and developer happiness.
+Dibangun di atas ekosistem **TALL Stack** yang tangguh, memastikan kinerja, skalabilitas, dan kemudahan pengembangan.
 
-| Component | Technology | Description |
+| Komponen | Teknologi | Deskripsi |
 | :--- | :--- | :--- |
-| **Backend Framework** | **Laravel 11** (PHP 8.2+) | The foundation. Robust, secure, and modern MVC architecture. |
-| **Admin Panel** | **Filament PHP v3** | A beautiful, full-featured admin panel for managing orders, products, and settings. |
-| **Frontend** | **Blade + Tailwind CSS + Alpine.js** | A "Scroll-driven" immersive experience inspired by Apple's product landing pages. |
-| **Database** | **MySQL** | Reliable relational database for structured order and product data. |
-| **Automation** | **Fonnte API** | WhatsApp Gateway integration for true automation of billing and notifications. |
+| **Backend Framework** | **Laravel 11** (PHP 8.2+) | Pondasi utama. Arsitektur MVC modern yang kuat dan aman. |
+| **Admin Panel** | **Filament PHP v3** | Panel admin kaya fitur untuk mengelola pesanan, produk, dan pengaturan. |
+| **Frontend** | **Blade + Tailwind CSS + Alpine.js** | Pengalaman imersif "Scroll-driven" yang terinspirasi dari halaman peluncuran produk Apple. |
+| **Database** | **MySQL** | Basis data relasional yang andal untuk data pesanan dan produk yang terstruktur. |
+| **Otomatisasi** | **Fonnte API** | Integrasi WhatsApp Gateway untuk otomatisasi penuh tagihan dan notifikasi. |
 
 ---
 
-## ✅ Core Features
+## ✅ Fitur Utama
 
-### 🍎 Apple-Style UX & Storytelling
-The public-facing website deviates from traditional flat e-commerce layouts. It employs **scroll-driven animations**, glassmorphism (glass cards), and high-resolution imagery to narrate the quality of "Abon Ikan Ivo Karya."
+### 🍎 UX ala Apple & Storytelling
+Website publik menyimpang dari tata letak e-commerce datar tradisional. Menggunakan **animasi berbasis scroll**, glassmorphism (kartu kaca), dan citra resolusi tinggi untuk menceritakan kualitas "Abon Ikan Ivo Karya".
 
-### 🤖 True Automation (Fonnte Integration)
-Manual message sending is a thing of the past.
-- **Auto-Billing**: When an order is placed, a WhatsApp message with payment details is instantly sent to the customer.
-- **Shipping Updates**: When status changes to `Shipped`, the receipt number (Resi) and tracking link are auto-sent.
+### 🤖 Otomatisasi Penuh (Integrasi Fonnte)
+Pengiriman pesan manual adalah masa lalu.
+- **Tagihan Otomatis**: Saat pesanan dibuat, pesan WhatsApp berisi detail pembayaran dikirim secara instan ke pelanggan.
+- **Update Pengiriman**: Saat status berubah menjadi `Shipped`, nomor resi dan link pelacakan dikirim otomatis.
 
-### 📊 Filament Analytics Dashboard
-Data-driven decision making.
-- **Real vs Target Charts**: Visual comparison of actual sales against the 50kg production target.
-- **Revenue Trends**: Monthly performance visualization.
-- **Order Status Distribution**: Quick insight into pending vs completed orders.
-- **Customer Growth**: Tracking new user acquisitions over time.
+### 📊 Dashboard Analitik Filament
+Pengambilan keputusan berbasis data.
+- **Grafik Real vs Target**: Perbandingan visual penjualan aktual terhadap target produksi 50kg.
+- **Tren Pendapatan**: Visualisasi kinerja bulanan.
+- **Distribusi Status Pesanan**: Wawasan cepat tentang pesanan tertunda vs selesai.
+- **Pertumbuhan Pelanggan**: Melacak akuisisi pengguna baru dari waktu ke waktu.
 
-### 🔒 Privacy & Security features
-- **Hidden Admin Entry**: No unsightly "Admin Login" buttons on the header. The access point is discreetly placed in the footer to maintain brand exclusivity.
-- **Dynamic Settings**: Admin can update WhatsApp numbers and Bank Account info directly from the dashboard without touching code.
-- **Secure Tracking**: Orders are tracked via a unique, hashed `tracking_token`, ensuring customers can only see their own orders.
+### 🔒 Fitur Privasi & Keamanan
+- **Admin Entry Tersembunyi**: Tidak ada tombol "Admin Login" yang merusak pemandangan di header. Akses ditempatkan secara tersembunyi di footer untuk menjaga eksklusivitas merek.
+- **Pengaturan Dinamis**: Admin dapat memperbarui nomor WhatsApp dan info Rekening Bank langsung dari dashboard tanpa menyentuh kode.
+- **Pelacakan Aman**: Pesanan dilacak melalui `tracking_token` yang unik dan di-hash, memastikan pelanggan hanya bisa melihat pesanan mereka sendiri.
 
 ---
 
-## 🛠 Future Roadmap (In Development)
+## 🛠 Rencana Pengembangan (Roadmap)
 
-| Feature | Status | Description |
+| Fitur | Status | Deskripsi |
 | :--- | :--- | :--- |
-| **RajaOngkir Integration** | 📝 Planned | Automatic shipping cost calculation based on weight and location. |
-| **Export Reports** | 📝 Planned | One-click generation of PDF/Excel monthly sales reports for business accounting. |
-| **Inventory Prediction** | 🧠 AI Concept | AI-driven alerts predicting stock depletion based on sales velocity. |
-| **PWA Support** | 📱 Planned | Enabling "Add to Home Screen" functionality for a native app-like experience. |
+| **Integrasi RajaOngkir** | 📝 Direncanakan | Perhitungan biaya pengiriman otomatis berdasarkan berat dan lokasi. |
+| **Ekspor Laporan** | 📝 Direncanakan | Pembuatan laporan penjualan bulanan PDF/Excel sekali klik untuk pembukuan. |
+| **Prediksi Inventaris** | 🧠 Konsep AI | Peringatan berbasis AI yang memprediksi penipisan stok berdasarkan kecepatan penjualan. |
+| **PWA Support** | 📱 Direncanakan | Memungkinkan pelanggan menginstal website sebagai aplikasi mobile native. |
 
 ---
 
-## ⚙️ Installation Guide
+## ⚙️ Panduan Instalasi
 
-Follow these steps to set up the project locally.
+Ikuti langkah-langkah ini untuk menjalankan proyek secara lokal.
 
-### Prerequisites
-- PHP 8.2 or higher
+### Prasyarat
+- PHP 8.2 atau lebih tinggi
 - Composer
 - Node.js & NPM
 - MySQL Server
 
-### Steps
+### Langkah-langkah
 
-1.  **Clone the Repository**
+1.  **Clone Repository**
     ```bash
     git clone https://github.com/username/website-ivo-karya.git
     cd website-ivo-karya
@@ -91,21 +91,21 @@ Follow these steps to set up the project locally.
     npm install
     ```
 
-3.  **Environment Setup**
-    Copy the `.env.example` file to `.env` and configure your database and Fonnte credentials.
+3.  **Setup Environment**
+    Salin file `.env.example` ke `.env` dan konfigurasikan database serta kredensial Fonnte Anda.
     ```bash
     cp .env.example .env
     php artisan key:generate
     ```
-    *Note: Ensure you set `FONNTE_TOKEN` in your `.env` or via the Admin Dashboard Settings.*
+    *Catatan: Pastikan Anda mengatur `FONNTE_TOKEN` di `.env` atau melalui Pengaturan Dashboard Admin.*
 
-4.  **Database Migration & Seeding**
+4.  **Migrasi Database & Seeding**
     ```bash
     php artisan migrate --seed
     ```
 
-5.  **Run Development Servers**
-    Open two terminal tabs:
+5.  **Jalankan Server Development**
+    Buka dua tab terminal:
     ```bash
     # Terminal 1 (Backend)
     php artisan serve
@@ -116,17 +116,17 @@ Follow these steps to set up the project locally.
 
 ---
 
-## 🏗 Project Architecture
+## 🏗 Arsitektur Proyek
 
-The system follows the standard **MVC (Model-View-Controller)** pattern enforced by Laravel.
+Sistem mengikuti pola **MVC (Model-View-Controller)** standar yang ditegakkan oleh Laravel.
 
-- **Services**: `FonnteService` abstracts the WhatsApp API logic, keeping Controllers clean.
-- **Filament Resources**: Admin logic is encapsulated within `app/Filament/`, separating back-office operations from the public frontend.
-- **Livewire Components**: Used for dynamic frontend elements like the **Product Review System** and **Cart Modal**.
+- **Services**: `FonnteService` mengabstraksi logika API WhatsApp, menjaga Controller tetap bersih.
+- **Filament Resources**: Logika admin dikapsulasi dalam `app/Filament/`, memisahkan operasional back-office dari frontend publik.
+- **Livewire Components**: Digunakan untuk elemen frontend dinamis seperti **Sistem Ulasan Produk** dan **Modal Keranjang**.
 
 ---
 
 <p align="center">
   <br>
-  Built with ❤️ by <strong>Mustari Syahding</strong> for <strong>UMKM Indonesia</strong>.
+  Dibuat dengan ❤️ oleh <strong>Mustari Syahding</strong> untuk <strong>UMKM Indonesia</strong>.
 </p>
