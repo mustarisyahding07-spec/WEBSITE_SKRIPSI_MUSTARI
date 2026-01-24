@@ -33,7 +33,7 @@
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <!-- Ensure this image is correct relative to public/img -->
-            <img src="{{ asset('img/premium/product-group.jpg') }}" alt="Hero Background" class="w-full h-full object-cover opacity-60 scale-105 animate-slow-zoom">
+            <img src="{{ asset('img/premium/hero-bg-new.jpg') }}" alt="Hero Background" class="w-full h-full object-cover opacity-60 scale-105 animate-slow-zoom">
             <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black"></div>
         </div>
         
@@ -52,7 +52,7 @@
                x-transition:enter="transition ease-out duration-1000 delay-300"
                x-transition:enter-start="opacity-0 translate-y-10"
                x-transition:enter-end="opacity-100 translate-y-0">
-               Rasakan kenikmatan cita rasa tradisional Abon Sidrap. Dibuat dengan penuh hati untuk kualitas tak tertandingi.
+               Rasakan kenikmatan cita rasa tradisional Abon IVO KARYA. Dibuat dengan rempah-rempah pilihan.
             </p>
             
             <!-- Scroll Indicator -->
@@ -216,7 +216,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="col-span-1 md:col-span-2">
                     <h3 class="text-2xl font-display font-bold mb-4">IVO KARYA</h3>
-                    <p class="text-gray-400 max-w-sm">Kualitas terbaik dari hati kami untuk keluarga Anda. Rasakan bedanya abon premium yang sesungguhnya.</p>
+                    <p class="text-gray-400 max-w-sm">Kualitas terbaik dari hati kami untuk keluarga Anda. Rasakan bedanya abon IVO KARYA dengan abon yang lainnya.</p>
                 </div>
                 <div>
                      <h4 class="font-bold mb-4 text-brand-500">Tautan</h4>

@@ -12,6 +12,21 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []);
+        
+        // Filter out invalid items (fixes "Rp 0" ghost items)
+        $cleanCart = [];
+        foreach($cart as $id => $details) {
+            if (!empty($details['name']) && $details['price'] > 0) {
+                $cleanCart[$id] = $details;
+            }
+        }
+        
+        if (count($cart) !== count($cleanCart)) {
+            session()->put('cart', $cleanCart);
+            $cart = $cleanCart;
+        }
+
+        $cart = session()->get('cart', []);
         $total = 0;
         foreach($cart as $id => $details) {
             $total += $details['price'] * $details['quantity'];

@@ -9,7 +9,7 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'user_id', 'customer_name', 'rating', 'comment', 'is_approved'];
+    protected $fillable = ['product_id', 'user_id', 'customer_name', 'rating', 'comment', 'is_approved', 'image'];
 
     protected $casts = [
         'is_approved' => 'boolean',

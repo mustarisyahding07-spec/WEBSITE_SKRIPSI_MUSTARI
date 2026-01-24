@@ -17,6 +17,9 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
 Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+// Track Order
+Route::get('/track', [App\Http\Controllers\Front\TrackOrderController::class, 'index'])->name('track.index');
 Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::get('/dashboard', function () {
     return redirect('/admin');

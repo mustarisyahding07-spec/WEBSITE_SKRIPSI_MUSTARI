@@ -17,10 +17,10 @@ class FonnteService
      */
     public static function send($target, $message)
     {
-        $apiKey = Setting::where('key', 'fonnte_api_key')->value('value');
+        $apiKey = config('services.fonnte.key');
 
         if (empty($apiKey)) {
-            Log::warning('Fonnte API Key is missing in Settings.');
+            Log::warning('Fonnte API Key is missing in .env (FONNTE_API_KEY).');
             return null;
         }
 

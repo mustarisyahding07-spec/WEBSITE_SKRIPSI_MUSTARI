@@ -51,6 +51,27 @@
                 </div>
 
                 <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Foto (Opsional)
+                    </label>
+                    <input type="file" wire:model="image" class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-brand-50 file:text-brand-700
+                        hover:file:bg-brand-100
+                    "/>
+                    @error('image') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    
+                    @if ($image)
+                        <div class="mt-2">
+                            <span class="text-xs text-gray-500">Preview:</span>
+                            <img src="{{ $image->temporaryUrl() }}" class="h-20 w-20 object-cover rounded mt-1">
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="comment">
                         Ulasan Anda
                     </label>
@@ -86,9 +107,14 @@
                         </div>
                         <span class="text-xs text-gray-500">{{ $review->created_at->diffForHumans() }}</span>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed">
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
                         {{ $review->comment }}
                     </p>
+                    @if($review->image)
+                        <div class="mb-2">
+                            <img src="{{ Storage::url($review->image) }}" alt="Review Photo" class="h-24 w-24 object-cover rounded-md border border-gray-200 cursor-pointer hover:opacity-90 transition" onclick="window.open(this.src, '_blank')">
+                        </div>
+                    @endif
                 </div>
             @empty
                 <div class="text-center py-10 text-gray-500">

@@ -55,6 +55,13 @@
                      </span>
                  </div>
 
+                 <!-- Short Description (below product name) -->
+                 @if($product->description)
+                 <div class="prose prose-sm max-w-none text-gray-600 mb-6">
+                     {!! $product->description !!}
+                 </div>
+                 @endif
+
                  <!-- Pricing -->
                  <div class="mb-6 flex items-center space-x-3">
                      @if($product->discount_price && $product->discount_price < $product->price)
@@ -64,11 +71,6 @@
                      @else
                          <span class="text-3xl font-bold text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                      @endif
-                 </div>
-
-                 <!-- Description -->
-                 <div class="prose max-w-none text-gray-600 mb-8">
-                     {!! $product->description !!}
                  </div>
 
                  <!-- Add to Cart -->

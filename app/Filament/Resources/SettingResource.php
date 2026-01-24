@@ -28,7 +28,7 @@ class SettingResource extends Resource
                     ->unique(ignoreRecord: true),
                 Forms\Components\Textarea::make('value')
                     ->required()
-                    ->helperText('Untuk fonnte_api_key, masukkan token Fonnte. Untuk bank_account_info, masukkan detail bank.'),
+                    ->helperText('Untuk fonnte_api_key, settingan sudah dipindah ke file .env (FONNTE_API_KEY). Untuk bank_account_info, masukkan detail bank.'),
             ]);
     }
 

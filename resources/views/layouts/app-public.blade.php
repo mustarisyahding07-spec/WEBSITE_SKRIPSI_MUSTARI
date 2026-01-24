@@ -91,6 +91,7 @@
             </div>
         </footer>
 
+        @include('components.chatbot-widget')
         @livewireScripts
     </body>
 </html>

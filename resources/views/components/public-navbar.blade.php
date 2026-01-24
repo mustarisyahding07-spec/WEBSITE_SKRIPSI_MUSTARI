@@ -9,6 +9,7 @@
             <a href="{{ request()->routeIs('home') ? '#story' : url('/#story') }}" class="hover:text-brand-400 transition-colors">Cerita Kami</a>
             <a href="{{ route('products.index') }}" class="hover:text-brand-400 transition-colors">Produk</a>
             <a href="{{ request()->routeIs('home') ? '#articles-section' : url('/#articles-section') }}" class="hover:text-brand-400 transition-colors">Edukasi & Tips</a>
+            <a href="{{ route('track.index') }}" class="hover:text-brand-400 transition-colors">Lacak Pesanan</a>
         </div>
             <!-- Icons -->
             <div class="flex items-center space-x-4" x-data="{ count: {{ count(session('cart') ?? []) }} }" @cart-updated.window="count = $event.detail.cart_count">

@@ -45,6 +45,10 @@ class ReviewResource extends Resource
                 Forms\Components\Toggle::make('is_approved')
                     ->label('Approved')
                     ->default(false),
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->directory('reviews')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -60,6 +64,9 @@ class ReviewResource extends Resource
                     ->label('Reviewer')
                     ->formatStateUsing(fn ($state, Review $record) => $record->user ? $record->user->name : ($state ?? 'Guest'))
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Photo')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('rating')
                     ->numeric()
                     ->sortable()
