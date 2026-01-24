@@ -20,12 +20,24 @@ class Order extends Model
         'tracking_number',
         'tracking_token',
         'payment_proof',
+        // Shipping fields
+        'destination_city_id',
+        'destination_city_name',
+        'postal_code',
+        'courier',
+        'courier_service',
+        'shipping_cost',
+        'latitude',
+        'longitude',
     ];
 
     protected $casts = [
         'items_json' => 'array',
         'total_amount' => 'decimal:2',
         'total_weight' => 'decimal:2',
+        'shipping_cost' => 'decimal:2',
+        'latitude' => 'decimal:7',
+        'longitude' => 'decimal:7',
     ];
 
     protected static function boot()

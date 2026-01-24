@@ -28,6 +28,15 @@ Route::get('/dashboard', function () {
 Route::get('/order/track/{token}', [CartController::class, 'track'])->name('order.track');
 Route::post('/order/confirm/{token}', [CartController::class, 'confirmReceive'])->name('order.confirm');
 
+// Shipping API Routes
+Route::prefix('api/shipping')->group(function () {
+    Route::get('/provinces', [App\Http\Controllers\Api\ShippingController::class, 'getProvinces']);
+    Route::get('/cities', [App\Http\Controllers\Api\ShippingController::class, 'getCities']);
+    Route::post('/find-city', [App\Http\Controllers\Api\ShippingController::class, 'findCityByPostalCode']);
+    Route::post('/cost', [App\Http\Controllers\Api\ShippingController::class, 'calculateCost']);
+    Route::post('/geocode', [App\Http\Controllers\Api\ShippingController::class, 'reverseGeocode']);
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

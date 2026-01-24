@@ -94,6 +94,12 @@ class CartController extends Controller
         $request->validate([
             'address' => 'required|string',
             'name' => 'required|string',
+            'phone' => 'required|string',
+            'postal_code' => 'required|string|size:5',
+            'destination_city_id' => 'required|string',
+            'courier' => 'required|string',
+            'courier_service' => 'required|string',
+            'shipping_cost' => 'required|numeric|min:0',
         ]);
 
         $cart = session()->get('cart');
@@ -101,24 +107,19 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Keranjang belanja kosong');
         }
 
-        // 1. Format Message
-        $message = "Halo Admin Ivo Karya, saya ingin memesan:\n\n";
-        $total = 0;
+        // Calculate totals
+        $subtotal = 0;
+        $totalWeight = 0;
         
         foreach($cart as $id => $details) {
-            $subtotal = $details['price'] * $details['quantity'];
-            $total += $subtotal;
-            $message .= "- {$details['name']} ({$details['quantity']}x) - Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+            $subtotal += $details['price'] * $details['quantity'];
+            $totalWeight += ($details['weight'] ?? 250) * $details['quantity'];
         }
         
-        $message .= "\nTotal: Rp " . number_format($total, 0, ',', '.') . "\n";
-        $message .= "\nNama: " . $request->name;
-        $message .= "\nAlamat Pengiriman: " . $request->address;
-        
-        // 2. Clear Cart (Optional? Maybe keep until confirmed? Let's clear for now as it redirects)
-        // session()->forget('cart'); 
+        $shippingCost = (float) $request->shipping_cost;
+        $grandTotal = $subtotal + $shippingCost;
 
-        // 3. Save Order to Database (As per requirements "Order Monitoring")
+        // Save Order to Database
         $order = null;
         try {
             $order = \App\Models\Order::create([
@@ -127,10 +128,19 @@ class CartController extends Controller
                 'customer_address' => $request->address,
                 'customer_phone' => $request->phone, 
                 'items_json' => $cart,
-                'total_amount' => $total,
-                'total_weight' => 0, // Calculate if needed based on items
+                'total_amount' => $grandTotal,
+                'total_weight' => $totalWeight,
                 'status' => 'pending',
                 'whatsapp_ref' => 'WA-' . time(),
+                // Shipping data
+                'destination_city_id' => $request->destination_city_id,
+                'destination_city_name' => $request->destination_city_name ?? '',
+                'postal_code' => $request->postal_code,
+                'courier' => $request->courier,
+                'courier_service' => $request->courier_service,
+                'shipping_cost' => $shippingCost,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
             ]);
             
             // Clear Cart after successful DB save
@@ -140,7 +150,7 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
 
-        // 4. Redirect to Tracking Page
+        // Redirect to Tracking Page
         return redirect()->route('order.track', $order->tracking_token);
     }
 

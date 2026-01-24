@@ -39,4 +39,9 @@ return [
         ],
     ],
 
+    'rajaongkir' => [
+        'key' => env('RAJAONGKIR_API_KEY'),
+        'origin_city' => env('RAJAONGKIR_ORIGIN_CITY', '398'), // Sidenreng Rappang
+    ],
+
 ];
