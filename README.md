@@ -126,7 +126,164 @@ Sistem mengikuti pola **MVC (Model-View-Controller)** standar yang ditegakkan ol
 
 ---
 
+## 📂 Struktur Folder
+
+```
+website-ivo-karya/
+├── app/
+│   ├── Filament/           # Admin panel resources & widgets
+│   │   ├── Resources/      # CRUD resources (Product, Order, etc.)
+│   │   └── Widgets/        # Dashboard charts & stats
+│   ├── Http/Controllers/
+│   │   ├── Front/          # Public controllers (Home, Cart, Track)
+│   │   └── Admin/          # Admin controllers (deprecated, use Filament)
+│   ├── Models/             # Eloquent models
+│   ├── Services/           # Business logic (FonnteService)
+│   └── Livewire/           # Livewire components
+├── database/
+│   ├── migrations/         # Database schema
+│   └── seeders/            # Sample data
+├── docs/                   # 📚 Dokumentasi Lengkap
+├── resources/
+│   └── views/
+│       ├── front/          # Public pages (catalog, cart, track)
+│       ├── components/     # Reusable Blade components
+│       └── layouts/        # Layout templates
+├── routes/
+│   ├── web.php             # Public routes
+│   └── auth.php            # Authentication routes
+└── public/                 # Static assets
+```
+
+---
+
+## 🗄️ Database Schema
+
+```mermaid
+erDiagram
+    users ||--o{ orders : "places"
+    users ||--o{ reviews : "writes"
+    categories ||--o{ products : "contains"
+    products ||--o{ reviews : "has"
+
+    users {
+        bigint id PK
+        string name
+        string email UK
+        string password
+    }
+
+    products {
+        bigint id PK
+        bigint category_id FK
+        string name
+        decimal price
+        int stock
+        int weight
+    }
+
+    orders {
+        bigint id PK
+        bigint user_id FK
+        string customer_name
+        string customer_phone
+        json items
+        decimal total_amount
+        string status
+        string tracking_token UK
+    }
+
+    reviews {
+        bigint id PK
+        bigint product_id FK
+        int rating
+        text comment
+        boolean is_approved
+    }
+```
+
+---
+
+## 📚 Dokumentasi Lengkap
+
+Dokumentasi komprehensif tersedia di folder `docs/`:
+
+| Dokumen | Deskripsi | Link |
+|:--------|:----------|:-----|
+| 🎨 **Design & Arsitektur** | Diagram UML, ERD, Sequence | [DESIGN.md](docs/DESIGN.md) |
+| 📊 **Panduan Admin Dashboard** | 7 halaman admin dengan flowchart | [ADMIN_DASHBOARD_GUIDE.md](docs/ADMIN_DASHBOARD_GUIDE.md) |
+| 🌐 **Panduan Halaman Publik** | 8 halaman publik dengan user journey | [PUBLIC_PAGES_GUIDE.md](docs/PUBLIC_PAGES_GUIDE.md) |
+| 🔒 **Keamanan Sistem** | Auth, RBAC, validasi | [SECURITY_SYSTEM.md](docs/SECURITY_SYSTEM.md) |
+| 📦 **Dependencies** | Daftar library & package | [DEPENDENCIES.md](docs/DEPENDENCIES.md) |
+| 🔬 **White Box Testing** | Pengujian struktural | [WHITE_BOX_TESTING.md](docs/WHITE_BOX_TESTING.md) |
+| 🧪 **Black Box Testing** | Pengujian fungsional | [BLACK_BOX_TESTING.md](docs/BLACK_BOX_TESTING.md) |
+
+---
+
+## 🔧 Troubleshooting
+
+<details>
+<summary><strong>❌ Error: SQLSTATE Connection refused</strong></summary>
+
+**Penyebab**: MySQL server tidak berjalan.
+
+**Solusi**:
+```bash
+# Windows
+net start mysql
+
+# Linux/Mac
+sudo service mysql start
+```
+</details>
+
+<details>
+<summary><strong>❌ Error: Class not found</strong></summary>
+
+**Penyebab**: Autoloader belum di-refresh setelah install package.
+
+**Solusi**:
+```bash
+composer dump-autoload
+php artisan optimize:clear
+```
+</details>
+
+<details>
+<summary><strong>❌ Vite manifest not found</strong></summary>
+
+**Penyebab**: Frontend assets belum di-compile.
+
+**Solusi**:
+```bash
+npm run dev
+# atau untuk production
+npm run build
+```
+</details>
+
+<details>
+<summary><strong>❌ 419 Page Expired</strong></summary>
+
+**Penyebab**: CSRF token expired atau session timeout.
+
+**Solusi**:
+1. Clear browser cookies
+2. Atau jalankan: `php artisan cache:clear`
+</details>
+
+---
+
+## 📄 Lisensi
+
+Project ini dikembangkan untuk keperluan **Tugas Akhir/Skripsi**.
+
+**Universitas Ichsan Sidenreng Rappang** © 2026
+
+---
+
 <p align="center">
   <br>
   Dibuat dengan ❤️ oleh <strong>Mustari Syahding</strong> untuk <strong>UMKM Indonesia</strong>.
 </p>
+
