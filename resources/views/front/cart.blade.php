@@ -159,6 +159,31 @@
                                 <label for="address" class="block text-sm font-bold text-gray-700 mb-2">Detail Alamat <span class="text-red-500">*</span></label>
                                 <textarea name="address" id="address" rows="3" placeholder="Nama jalan, nomor rumah, RT/RW, patokan..." class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-brand-500 focus:border-brand-500 block p-3.5 transition-all outline-none" required></textarea>
                             </div>
+
+                            {{-- Payment Method --}}
+                            <div class="space-y-3">
+                                <label class="block text-sm font-bold text-gray-700">Metode Pembayaran</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="payment_method" value="transfer" class="peer sr-only" checked>
+                                        <div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-brand-600 peer-checked:bg-brand-50 transition-all text-center h-full flex flex-col items-center justify-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 peer-checked:text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                            </svg>
+                                            <span class="text-sm font-semibold text-gray-700 peer-checked:text-brand-700">Transfer Bank</span>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="payment_method" value="cod" class="peer sr-only">
+                                        <div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-brand-600 peer-checked:bg-brand-50 transition-all text-center h-full flex flex-col items-center justify-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 peer-checked:text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            </svg>
+                                            <span class="text-sm font-semibold text-gray-700 peer-checked:text-brand-700">COD (Bayar Ditempat)</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                             
                             <button 
                                 type="submit" 

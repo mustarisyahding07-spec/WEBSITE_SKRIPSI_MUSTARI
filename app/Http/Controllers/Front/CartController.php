@@ -100,6 +100,7 @@ class CartController extends Controller
             'courier' => 'required|string',
             'courier_service' => 'required|string',
             'shipping_cost' => 'required|numeric|min:0',
+            'payment_method' => 'required|in:transfer,cod',
         ]);
 
         $cart = session()->get('cart');
@@ -107,21 +108,36 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Keranjang belanja kosong');
         }
 
-        // Calculate totals
-        $subtotal = 0;
-        $totalWeight = 0;
-        
-        foreach($cart as $id => $details) {
-            $subtotal += $details['price'] * $details['quantity'];
-            $totalWeight += ($details['weight'] ?? 250) * $details['quantity'];
-        }
-        
-        $shippingCost = (float) $request->shipping_cost;
-        $grandTotal = $subtotal + $shippingCost;
-
-        // Save Order to Database
-        $order = null;
         try {
+            // Start Transaction to ensure Stock and Order are synced
+            \Illuminate\Support\Facades\DB::beginTransaction();
+
+            $subtotal = 0;
+            $totalWeight = 0;
+            
+            // 1. Check Stock & Decrement FIRST
+            foreach($cart as $id => $details) {
+                $product = \App\Models\Product::where('id', $id)->lockForUpdate()->first(); // Lock row for currency
+                
+                if (!$product) {
+                    throw new \Exception("Produk '{$details['name']}' tidak lagi tersedia.");
+                }
+
+                if ($product->stock < $details['quantity']) {
+                    throw new \Exception("Stok produk '{$product->name}' tidak mencukupi. Sisa: {$product->stock}");
+                }
+
+                // Decrement Stock
+                $product->decrement('stock', $details['quantity']);
+
+                $subtotal += $details['price'] * $details['quantity'];
+                $totalWeight += ($details['weight'] ?? 250) * $details['quantity'];
+            }
+            
+            $shippingCost = (float) $request->shipping_cost;
+            $grandTotal = $subtotal + $shippingCost;
+
+            // 2. Create Order
             $order = \App\Models\Order::create([
                 'user_id' => auth()->id(), // Null if guest
                 'customer_name' => $request->name,
@@ -132,6 +148,7 @@ class CartController extends Controller
                 'total_weight' => $totalWeight,
                 'status' => 'pending',
                 'whatsapp_ref' => 'WA-' . time(),
+                'payment_method' => $request->payment_method, // Save payment method
                 // Shipping data
                 'destination_city_id' => $request->destination_city_id,
                 'destination_city_name' => $request->destination_city_name ?? '',
@@ -143,15 +160,18 @@ class CartController extends Controller
                 'longitude' => $request->longitude,
             ]);
             
+            \Illuminate\Support\Facades\DB::commit();
+
             // Clear Cart after successful DB save
             session()->forget('cart');
             
+            // Redirect to Tracking Page
+            return redirect()->route('order.track', $order->tracking_token);
+            
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            \Illuminate\Support\Facades\DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal memproses pesanan: ' . $e->getMessage());
         }
-
-        // Redirect to Tracking Page
-        return redirect()->route('order.track', $order->tracking_token);
     }
 
     public function track($token)

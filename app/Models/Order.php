@@ -16,6 +16,7 @@ class Order extends Model
         'total_amount',
         'total_weight',
         'status',
+        'payment_method',
         'whatsapp_ref',
         'tracking_number',
         'tracking_token',

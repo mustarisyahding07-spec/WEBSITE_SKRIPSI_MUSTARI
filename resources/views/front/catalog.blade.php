@@ -74,7 +74,20 @@
                         @endif
                     </div>
                     
+                    <div class="mb-3">
+                        @if($product->stock > 0)
+                            <span class="text-sm font-medium {{ $product->stock <= 5 ? 'text-red-500' : 'text-gray-600' }}">
+                                Sisa Stok: {{ $product->stock }}
+                            </span>
+                        @else
+                            <span class="text-sm font-bold text-red-600">
+                                Stok Habis
+                            </span>
+                        @endif
+                    </div>
+                    
                     <div x-data="{ quantity: 1 }">
+                        @if($product->stock > 0)
                         <!-- Quantity & Buttons -->
                         <div class="flex items-center gap-3 mb-4">
                             <!-- Quantity Selector -->
@@ -108,6 +121,7 @@
                            class="block w-full text-center bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-brand-600 transition-colors duration-300">
                             Beli Sekarang
                         </a>
+                        @endif
                     </div>
                 </div>
             </div>

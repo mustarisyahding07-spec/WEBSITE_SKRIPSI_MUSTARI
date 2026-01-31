@@ -85,6 +85,26 @@
                     @endforeach
                 </ul>
                 
+                {{-- Payment Instructions --}}
+                <div class="mt-8 p-4 rounded-xl border {{ $order->payment_method == 'cod' ? 'bg-amber-50 border-amber-200' : 'bg-blue-50 border-blue-200' }}">
+                    <h4 class="font-bold mb-2 {{ $order->payment_method == 'cod' ? 'text-amber-800' : 'text-blue-800' }}">
+                        {{ $order->payment_method == 'cod' ? '💰 Pembayaran COD (Bayar di Tempat)' : '💳 Instruksi Pembayaran' }}
+                    </h4>
+                    
+                    @if($order->payment_method == 'cod')
+                        <p class="text-sm text-amber-700">
+                            Silakan siapkan uang tunai sebesar <strong>Rp {{ number_format($order->total_amount, 0, ',', '.') }}</strong> saat kurir mengantar pesanan Anda.
+                        </p>
+                    @else
+                        <p class="text-sm text-blue-700 mb-2">Silakan transfer total tagihan ke rekening berikut:</p>
+                        <div class="bg-white p-3 rounded-lg border border-blue-100">
+                            <p class="font-bold text-gray-800">BCA: 1234-5678-90 a.n Ivo Karya</p>
+                            <p class="font-bold text-gray-800">BRI: 0987-6543-21 a.n Ivo Karya</p>
+                        </div>
+                        <p class="text-xs text-blue-600 mt-2">Kirim bukti transfer ke WhatsApp admin kami.</p>
+                    @endif
+                </div>
+
                 @if($order->tracking_number)
                 <div class="mt-6 p-4 bg-blue-50 text-blue-800 rounded-xl flex items-center justify-between">
                     <span class="text-sm font-bold">Resi Pengiriman:</span>

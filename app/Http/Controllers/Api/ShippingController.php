@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\RajaOngkirService;
+use App\Services\KomerceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ShippingController extends Controller
 {
-    protected RajaOngkirService $rajaOngkir;
+    protected KomerceService $komerce;
 
-    public function __construct(RajaOngkirService $rajaOngkir)
+    public function __construct(KomerceService $komerce)
     {
-        $this->rajaOngkir = $rajaOngkir;
+        $this->komerce = $komerce;
     }
 
     /**
@@ -21,14 +21,14 @@ class ShippingController extends Controller
      */
     public function getProvinces()
     {
-        if (!$this->rajaOngkir->isConfigured()) {
+        if (!$this->komerce->isConfigured()) {
             return response()->json([
                 'success' => false,
-                'message' => 'RajaOngkir API key belum dikonfigurasi'
+                'message' => 'Komerce API key belum dikonfigurasi'
             ], 500);
         }
 
-        $provinces = $this->rajaOngkir->getProvinces();
+        $provinces = $this->komerce->getProvinces();
 
         return response()->json([
             'success' => true,
@@ -41,15 +41,15 @@ class ShippingController extends Controller
      */
     public function getCities(Request $request)
     {
-        if (!$this->rajaOngkir->isConfigured()) {
+        if (!$this->komerce->isConfigured()) {
             return response()->json([
                 'success' => false,
-                'message' => 'RajaOngkir API key belum dikonfigurasi'
+                'message' => 'Komerce API key belum dikonfigurasi'
             ], 500);
         }
 
         $provinceId = $request->query('province_id');
-        $cities = $this->rajaOngkir->getCities($provinceId);
+        $cities = $this->komerce->getCities($provinceId);
 
         return response()->json([
             'success' => true,
@@ -66,14 +66,14 @@ class ShippingController extends Controller
             'postal_code' => 'required|string|min:5|max:5'
         ]);
 
-        if (!$this->rajaOngkir->isConfigured()) {
+        if (!$this->komerce->isConfigured()) {
             return response()->json([
                 'success' => false,
-                'message' => 'RajaOngkir API key belum dikonfigurasi'
+                'message' => 'Komerce API key belum dikonfigurasi'
             ], 500);
         }
 
-        $city = $this->rajaOngkir->getCityByPostalCode($request->postal_code);
+        $city = $this->komerce->getCityByPostalCode($request->postal_code);
 
         if (!$city) {
             return response()->json([
@@ -93,26 +93,62 @@ class ShippingController extends Controller
      */
     public function calculateCost(Request $request)
     {
+        // 1. Validation
         $request->validate([
-            'destination_city_id' => 'required|string',
+            'destination_city_id' => 'required',
             'weight' => 'required|integer|min:1'
         ]);
 
-        if (!$this->rajaOngkir->isConfigured()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'RajaOngkir API key belum dikonfigurasi'
-            ], 500);
-        }
+        // 2. Configuration (Direct from Env to be safe)
+        $apiKey = env('KOMERCE_API_KEY', 'k02CWHYob5329ccf5fbf403fKMubq2tw'); 
+        $origin = env('KOMERCE_ORIGIN_CITY', 398); 
+        $destination = $request->destination_city_id;
+        $weight = $request->weight;
 
-        $costs = $this->rajaOngkir->getAllCourierCosts(
-            $request->destination_city_id,
-            $request->weight
-        );
+        // 3. Direct API Calls (Bypass Service & SSL Verification)
+        $results = [];
+        // Removed 'anteraja' to avoid 404s
+        $couriers = ['jne', 'sicepat', 'jnt', 'idexpress']; 
+
+        foreach ($couriers as $courier) {
+            try {
+                $response = Http::withoutVerifying() // Fix for local SSL issues
+                    ->asForm()
+                    ->withHeaders(['key' => $apiKey])
+                    ->post("https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost", [
+                        'origin' => $origin,
+                        'destination' => $destination,
+                        'weight' => $weight,
+                        'courier' => $courier
+                    ]);
+
+                if ($response->successful()) {
+                    $json = $response->json();
+                    $data = $json['data'] ?? [];
+                    
+                    // Simplify mapping
+                    foreach ($data as $item) {
+                        $results[] = [
+                            'courier' => strtoupper($item['code'] ?? $courier),
+                            'service' => $item['service'] ?? '-',
+                            'description' => $item['description'] ?? '-',
+                            'cost' => $item['cost'] ?? 0,
+                            'etd' => $item['etd'] ?? '-'
+                        ];
+                    }
+                }
+            } catch (\Exception $e) {
+                // Silently ignore failures to allow other couriers to show
+                \Illuminate\Support\Facades\Log::error("Direct Shipping Error ({$courier}): " . $e->getMessage());
+            }
+        }
+        
+        // 4. Sort by Price (Cheapest first)
+        usort($results, fn($a, $b) => $a['cost'] <=> $b['cost']);
 
         return response()->json([
             'success' => true,
-            'data' => $costs
+            'data' => $results
         ]);
     }
 
