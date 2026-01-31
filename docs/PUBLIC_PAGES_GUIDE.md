@@ -1,45 +1,58 @@
-# 🌐 Panduan Halaman Publik
+# 🌐 Panduan Halaman Publik Ivo Karya
 
-> **Platform E-Commerce Ivo Karya** - Dokumentasi Lengkap Halaman yang Diakses Pelanggan
+> **Dokumentasi Lengkap Halaman Website untuk Pengunjung**
 
 ---
 
-## 📋 Peta Situs (Sitemap)
+## 📋 Daftar Isi
+
+1. [Peta Situs](#peta-situs)
+2. [Landing Page](#1--landing-page)
+3. [Katalog Produk](#2--katalog-produk)
+4. [Detail Produk](#3--detail-produk)
+5. [Keranjang & Checkout](#4--keranjang--checkout)
+6. [Pelacakan Pesanan](#5--pelacakan-pesanan)
+7. [Daftar Artikel](#6--daftar-artikel)
+8. [Detail Artikel](#7--detail-artikel)
+9. [Autentikasi](#8--autentikasi)
+10. [Komponen Global](#komponen-global)
+
+---
+
+## Peta Situs
 
 ```mermaid
 graph TD
-    Home["🏠 Landing Page<br/>/"]
+    Home[🏠 Landing Page]
     
-    Home --> Katalog["📦 Katalog Produk<br/>/katalog"]
-    Home --> Articles["📰 Artikel<br/>/articles"]
-    Home --> Track["🔍 Lacak Pesanan<br/>/track"]
+    Home --> Catalog[📦 Katalog Produk]
+    Home --> Articles[📰 Daftar Artikel]
+    Home --> Track[📋 Lacak Pesanan]
+    Home --> Login[🔐 Login]
     
-    Katalog --> Detail["📄 Detail Produk<br/>/product/{slug}"]
-    Detail --> Cart["🛒 Keranjang<br/>/cart"]
-    Cart --> Checkout["💳 Checkout<br/>POST /checkout"]
-    Checkout --> TrackOrder["📋 Status Pesanan<br/>/order/track/{token}"]
+    Catalog --> ProductDetail[🔍 Detail Produk]
+    ProductDetail --> Cart[🛒 Keranjang]
+    Cart --> Checkout[💳 Checkout]
+    Checkout --> TrackOrder[📍 Halaman Pelacakan]
     
-    Articles --> ArticleDetail["📖 Detail Artikel<br/>/articles/{slug}"]
+    Articles --> ArticleDetail[📖 Detail Artikel]
     
-    style Home fill:#e3f2fd
-    style Cart fill:#fff3e0
-    style TrackOrder fill:#e8f5e9
+    Login --> Register[📝 Register]
+    Login --> ForgotPW[🔑 Lupa Password]
 ```
 
----
+### Ringkasan Halaman
 
-## Ringkasan Halaman Publik
-
-| No | Halaman | URL | Deskripsi Singkat |
-|:--:|:--------|:----|:------------------|
-| 1 | Landing Page | `/` | Hero section, fitur unggulan, CTA |
-| 2 | Katalog Produk | `/katalog` | Grid produk dengan filter kategori |
-| 3 | Detail Produk | `/product/{slug}` | Info lengkap, ulasan, add to cart |
-| 4 | Keranjang | `/cart` | Daftar item, form checkout |
-| 5 | Lacak Pesanan | `/track` | Form input nomor pesanan |
-| 6 | Status Pesanan | `/order/track/{token}` | Timeline status pengiriman |
-| 7 | Artikel | `/articles` | Daftar artikel/blog |
-| 8 | Detail Artikel | `/articles/{slug}` | Konten artikel lengkap |
+| No | Halaman | URL | Deskripsi |
+|:---|:--------|:----|:----------|
+| 1 | Landing Page | `/` | Homepage dengan hero, fitur, produk unggulan |
+| 2 | Katalog | `/katalog` | Daftar semua produk dengan filter |
+| 3 | Detail Produk | `/product/{slug}` | Info lengkap produk + review |
+| 4 | Keranjang | `/cart` | Daftar item + checkout form |
+| 5 | Pelacakan | `/track` & `/order/track/{token}` | Cari dan lacak pesanan |
+| 6 | Daftar Artikel | `/articles` | Blog/artikel list |
+| 7 | Detail Artikel | `/articles/{slug}` | Konten artikel lengkap |
+| 8 | Login | `/login` | Autentikasi user |
 
 ---
 
@@ -48,40 +61,39 @@ graph TD
 **URL**: `/`
 
 ### A. Tujuan Halaman
-
-Landing page adalah wajah utama website yang dirancang untuk memberikan **kesan premium** dan menceritakan kualitas produk Abon Ikan Ivo Karya. Menggunakan konsep **scroll-driven storytelling** yang terinspirasi dari website peluncuran produk Apple.
+Landing page adalah halaman pertama yang dilihat pengunjung. Dirancang dengan konsep **Apple-style storytelling** untuk menyampaikan nilai brand Ivo Karya sebagai produsen abon premium dari Sidenreng Rappang.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Hero Section** | Banner besar dengan tagline dan CTA | Static dengan parallax effect |
-| **Feature Highlights** | 3-4 card keunggulan produk | Hover animation |
-| **Product Showcase** | Preview produk unggulan | Scroll-triggered animation |
-| **About Section** | Cerita tentang Ivo Karya | Glassmorphism cards |
-| **Testimonials** | Slider ulasan pelanggan | Auto-slide carousel |
-| **CTA Section** | Call-to-action ke katalog | Hover effect button |
-| **Footer** | Info kontak, social links, **hidden admin link** | Static |
+| **Hero Section** | Banner besar dengan tagline dan CTA | Animasi fade-in |
+| **Value Proposition** | 3 keunggulan utama (Halal, Tanpa Pengawet, Berkualitas) | Static cards |
+| **Produk Unggulan** | 3-4 produk terlaris | Hover effect, click to detail |
+| **Proses Pembuatan** | Timeline proses produksi | Scroll-triggered animation |
+| **Testimoni** | Review pelanggan | Carousel/slider |
+| **CTA Section** | Call-to-action ke katalog | Button animasi |
+| **Footer** | Link navigasi, sosmed, copyright | Static |
 
 ### C. Data yang Ditampilkan
 
-- **Source**: Produk unggulan dari database (is_active = true)
-- **Update Frequency**: Real-time dari database
+| Data | Sumber | Update Frequency |
+|:-----|:-------|:-----------------|
+| Produk Unggulan | `products` table (featured=true) | Real-time |
+| Review Terbaru | `reviews` table (is_approved=true) | Real-time |
+| Info Toko | `settings` table | On change |
 
 ### D. User Journey
 
 ```mermaid
 flowchart LR
-    A["👤 Pengunjung"] --> B["Lihat Hero"]
-    B --> C["Scroll Bawah"]
-    C --> D["Baca Keunggulan"]
-    D --> E["Lihat Produk"]
-    E --> F{"Tertarik?"}
-    F -->|Ya| G["Klik Lihat Katalog"]
-    F -->|Tidak| H["Scroll Testimonial"]
-    H --> I["Tertarik"]
-    I --> G
-    G --> J["📦 Katalog"]
+    User([👤 Pengunjung]) -->|Visit| Hero[🖼️ Hero Section]
+    Hero -->|Scroll| Features[✨ Keunggulan]
+    Features -->|Scroll| Products[📦 Produk Unggulan]
+    Products -->|Click| Detail[🔍 Detail Produk]
+    Products -->|Scroll| Process[🏭 Proses Pembuatan]
+    Process -->|Scroll| Testimonial[⭐ Testimoni]
+    Testimonial -->|Click CTA| Catalog[📋 Katalog]
 ```
 
 ---
@@ -91,87 +103,105 @@ flowchart LR
 **URL**: `/katalog`
 
 ### A. Tujuan Halaman
-
-Menampilkan semua produk dalam **grid layout** yang responsif. Pelanggan dapat memfilter berdasarkan kategori dan melihat harga serta stok secara langsung.
+Menampilkan seluruh produk yang tersedia dengan kemampuan filter dan sort untuk memudahkan pelanggan menemukan produk yang diinginkan.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
 | **Page Header** | Judul "Katalog Produk" | Static |
-| **Category Filter** | Tombol filter per kategori | Click to filter |
-| **Product Grid** | Card produk 3-4 kolom | Hover shadow effect |
-| **Product Card** | Gambar, nama, harga, tombol | Klik → Detail produk |
-| **Stock Badge** | Indikator stok | Dynamic (merah jika habis) |
-| **Pagination** | Navigasi halaman | Click to paginate |
+| **Category Filter** | Dropdown filter kategori | Dynamic filter |
+| **Sort Options** | Sort by harga, nama, terbaru | Dynamic sort |
+| **Product Grid** | Grid 3-4 kolom produk | Responsive |
+| **Product Card** | Gambar, nama, harga, badge | Hover scale, click |
+| **Empty State** | Pesan jika tidak ada produk | Static |
+| **Pagination** | Navigasi halaman | Click navigation |
 
-### C. Data yang Ditampilkan
+### C. Product Card Elements
 
 ```
-GET /katalog
-Response: products (paginated), categories
+┌─────────────────────────────┐
+│  [📷 Gambar Produk]        │
+│  ┌─────┐                    │
+│  │SALE │ (jika ada diskon)  │
+│  └─────┘                    │
+├─────────────────────────────┤
+│  Nama Produk                │
+│  ⭐⭐⭐⭐⭐ (rating)         │
+│  Rp 75.000  Rp 100.000     │
+│  [🛒 Tambah] [👁️ Detail]   │
+└─────────────────────────────┘
 ```
 
 ### D. User Journey
 
 ```mermaid
 flowchart TD
-    A["Buka /katalog"] --> B["Lihat Semua Produk"]
-    B --> C{"Filter Kategori?"}
-    C -->|Ya| D["Pilih Kategori"]
-    D --> E["Tampil Produk Filtered"]
-    C -->|Tidak| F["Browse Grid"]
-    E --> F
-    F --> G["Klik Produk"]
-    G --> H["📄 Detail Produk"]
+    Start([Buka Katalog]) --> List[📋 Lihat Grid Produk]
+    List --> Filter{Ingin Filter?}
+    
+    Filter -->|Ya| SelectCat[Pilih Kategori]
+    SelectCat --> FilterResult[Hasil Filter]
+    FilterResult --> List
+    
+    Filter -->|Tidak| Browse[Browse Produk]
+    Browse --> Click{Tertarik?}
+    
+    Click -->|Ya| Detail[🔍 Ke Detail Produk]
+    Click -->|Tidak| Browse
+    
+    Detail --> AddCart[🛒 Tambah ke Keranjang]
+    AddCart --> Continue{Lanjut Belanja?}
+    
+    Continue -->|Ya| List
+    Continue -->|Tidak| Cart[🛒 Ke Keranjang]
 ```
 
 ---
 
-## 3. 📄 Detail Produk
+## 3. 🔍 Detail Produk
 
 **URL**: `/product/{slug}`
 
 ### A. Tujuan Halaman
-
-Halaman ini menyajikan **informasi lengkap** tentang satu produk, termasuk deskripsi, harga, berat, dan **ulasan dari pelanggan lain**. Dilengkapi tombol "Tambah ke Keranjang".
+Menampilkan informasi lengkap produk termasuk deskripsi, harga, stok, dan review pelanggan untuk membantu keputusan pembelian.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
 | **Product Image** | Gambar produk besar | Zoom on hover |
-| **Product Info** | Nama, harga, berat, stok | Static |
-| **Description** | Deskripsi lengkap produk | Static |
-| **Quantity Selector** | Input jumlah beli | +/- buttons |
-| **Add to Cart Button** | Tombol tambah keranjang | Click → add to session |
-| **Reviews Section** | Daftar ulasan (approved only) | Static list |
-| **Review Form** | Form tulis ulasan | Submit form |
-| **Related Products** | Produk lain dari kategori sama | Click → navigate |
+| **Product Info** | Nama, kategori, rating | Static |
+| **Price Section** | Harga, diskon, savings | Static |
+| **Stock Status** | Indikator ketersediaan | Dynamic |
+| **Add to Cart** | Button + quantity selector | Click action |
+| **Description** | Deskripsi lengkap | Expandable |
+| **Reviews Section** | Review pelanggan + form | Interactive |
+| **Related Products** | Produk terkait | Click navigation |
 
-### C. Data yang Ditampilkan
-
-```
-GET /product/{slug}
-Response: product, product.reviews (is_approved), related_products
-```
-
-### D. User Journey
+### C. Review Section
 
 ```mermaid
 flowchart TD
-    A["Buka Detail Produk"] --> B["Lihat Gambar & Info"]
-    B --> C["Baca Deskripsi"]
-    C --> D["Scroll ke Reviews"]
-    D --> E{"Yakin Beli?"}
-    E -->|Ya| F["Set Quantity"]
-    F --> G["Klik Tambah Keranjang"]
-    G --> H["✅ Added to Cart"]
-    H --> I{"Lanjut Belanja?"}
-    I -->|Ya| J["Kembali ke Katalog"]
-    I -->|Tidak| K["Buka Keranjang"]
-    E -->|Belum| L["Lihat Produk Lain"]
+    Reviews[📋 Daftar Review]
+    Reviews --> Stats[📊 Rating Summary]
+    Reviews --> List[📝 List Review]
+    Reviews --> Form[✍️ Form Tulis Review]
+    
+    Form --> Input[Input Rating + Komentar]
+    Input --> Submit[Submit]
+    Submit --> Pending[⏳ Menunggu Moderasi]
+    Pending --> Approved[✅ Ditampilkan]
 ```
+
+### D. SEO Metadata
+
+| Meta Tag | Value |
+|:---------|:------|
+| `title` | `{product.meta_title}` atau `{product.name} - Ivo Karya` |
+| `description` | `{product.meta_description}` atau deskripsi singkat |
+| `og:image` | `{product.image}` |
+| `og:type` | `product` |
 
 ---
 
@@ -180,202 +210,337 @@ flowchart TD
 **URL**: `/cart`
 
 ### A. Tujuan Halaman
-
-Halaman keranjang menampilkan **semua item** yang akan dibeli dan **form checkout** untuk mengisi data pengiriman. Setelah submit, pesanan dibuat dan invoice dikirim via WhatsApp.
+Menampilkan item yang ditambahkan ke keranjang dan menyediakan form checkout lengkap untuk menyelesaikan pembelian.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Cart Items Table** | Daftar produk, qty, subtotal | Edit qty / Remove |
-| **Total Section** | Total harga & berat | Auto-calculate |
-| **Checkout Form** | Nama, telepon, alamat | Input fields |
-| **Payment Info** | Instruksi transfer bank | Static (dari Settings) |
-| **Submit Button** | "Buat Pesanan" | POST /checkout |
-| **Empty State** | Pesan jika keranjang kosong | Link ke katalog |
+| **Cart Items** | Daftar item dengan qty | Update/Remove |
+| **Order Summary** | Subtotal, ongkir, total | Dynamic calculation |
+| **Customer Form** | Nama, telepon, alamat | Input validation |
+| **Location Picker** | Peta + input kode pos | Interactive map |
+| **Shipping Options** | Pilihan kurir + harga | Radio selection |
+| **Payment Method** | Transfer / COD | Radio selection |
+| **Checkout Button** | Submit pesanan | Click action |
 
-### C. Data yang Ditampilkan
-
-- **Cart Items**: Session-based storage
-- **Settings**: Rekening bank dari database
-
-### D. User Journey
+### C. Checkout Flow
 
 ```mermaid
 flowchart TD
-    A["Buka /cart"] --> B{"Keranjang Kosong?"}
-    B -->|Ya| C["Tampil Empty State"]
-    C --> D["Klik 'Belanja Sekarang'"]
-    D --> E["📦 Ke Katalog"]
+    Cart([🛒 Buka Keranjang]) --> HasItems{Ada Item?}
     
-    B -->|Tidak| F["Lihat Daftar Item"]
-    F --> G{"Edit Qty?"}
-    G -->|Ya| H["Update Quantity"]
-    H --> F
-    G -->|Tidak| I["Isi Form Checkout"]
-    I --> J["Nama Lengkap"]
-    J --> K["Nomor WhatsApp"]
-    K --> L["Alamat Lengkap"]
-    L --> M["Klik 'Buat Pesanan'"]
-    M --> N[("💾 Create Order")]
-    N --> O["📲 Kirim WA Invoice"]
-    O --> P["Redirect ke Tracking"]
+    HasItems -->|Tidak| Empty[📭 Keranjang Kosong]
+    Empty --> Catalog[Ke Katalog]
+    
+    HasItems -->|Ya| Review[Review Items]
+    Review --> UpdateQty{Update Qty?}
+    UpdateQty -->|Ya| ChangeQty[Ubah Jumlah]
+    ChangeQty --> Review
+    UpdateQty -->|Tidak| FillForm[📝 Isi Data Penerima]
+    
+    FillForm --> InputName[Nama Lengkap]
+    InputName --> InputPhone[No. WhatsApp]
+    InputPhone --> InputAddress[Alamat Lengkap]
+    InputAddress --> SelectLoc[📍 Pilih Lokasi]
+    
+    SelectLoc --> InputPostal[Input Kode Pos]
+    InputPostal --> FetchCity[Cari Kota]
+    FetchCity --> SelectCity[Konfirmasi Kota]
+    SelectCity --> CalcShipping[🚚 Hitung Ongkir]
+    
+    CalcShipping --> SelectCourier[Pilih Kurir]
+    SelectCourier --> SelectPayment{💳 Metode Bayar}
+    
+    SelectPayment -->|Transfer| ShowBank[Info Rekening]
+    SelectPayment -->|COD| ShowCOD[Info Bayar di Tempat]
+    
+    ShowBank --> ConfirmOrder[✅ Buat Pesanan]
+    ShowCOD --> ConfirmOrder
+    
+    ConfirmOrder --> CheckStock{Stok Cukup?}
+    CheckStock -->|Ya| CreateOrder[(💾 Simpan Order)]
+    CheckStock -->|Tidak| StockError[❌ Stok Habis]
+    StockError --> Review
+    
+    CreateOrder --> SendWA[📱 Kirim Notifikasi]
+    SendWA --> TrackPage[📍 Halaman Pelacakan]
+```
+
+### D. Location Picker Feature
+
+```mermaid
+sequenceDiagram
+    actor User as 👤 User
+    participant UI as 🖥️ LocationPicker
+    participant API as ⚙️ ShippingController
+    participant Map as 🗺️ Leaflet Map
+    
+    User->>UI: Klik "Gunakan GPS"
+    UI->>UI: Request geolocation
+    UI->>Map: Set marker pada koordinat
+    UI->>API: Reverse geocode koordinat
+    API-->>UI: Nama lokasi
+    
+    alt Atau input manual
+        User->>UI: Ketik kode pos
+        UI->>API: Cari kota berdasarkan kode pos
+        API-->>UI: Info kota
+        UI->>Map: Update marker
+    end
+    
+    UI->>API: Hitung ongkir ke kota tersebut
+    API-->>UI: Daftar kurir + harga
+    UI->>User: Tampilkan opsi pengiriman
 ```
 
 ---
 
-## 5. 🔍 Lacak Pesanan
+## 5. 📍 Pelacakan Pesanan
 
-**URL**: `/track`
+**URL**: `/track` dan `/order/track/{token}`
 
 ### A. Tujuan Halaman
+Memungkinkan pelanggan melacak status pesanan mereka menggunakan nomor pesanan atau WhatsApp.
 
-Form sederhana untuk pelanggan **memasukkan nomor telepon** dan mencari pesanan mereka. Sistem akan menampilkan daftar pesanan yang terkait.
-
-### B. Komponen UI
+### B. Komponen UI - Halaman Pencarian (`/track`)
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Search Form** | Input nomor telepon | Submit search |
-| **Search Button** | "Cari Pesanan" | Click to search |
-| **Results List** | Daftar pesanan ditemukan | Click to view detail |
-| **No Results** | Pesan jika tidak ditemukan | Static |
+| **Search Form** | Input nomor pesanan/WA | Submit search |
+| **Recent Orders** | Jika sudah pernah order | Click to view |
+| **Help Text** | Cara menemukan nomor pesanan | Static |
 
-### C. User Journey
-
-```mermaid
-flowchart LR
-    A["Buka /track"] --> B["Input No. Telepon"]
-    B --> C["Klik Cari"]
-    C --> D{"Pesanan Ditemukan?"}
-    D -->|Ya| E["Tampil Daftar"]
-    E --> F["Klik Pesanan"]
-    F --> G["📋 Status Detail"]
-    D -->|Tidak| H["Tampil 'Tidak Ditemukan'"]
-```
-
----
-
-## 6. 📋 Status Pesanan (Order Tracking)
-
-**URL**: `/order/track/{token}`
-
-### A. Tujuan Halaman
-
-Menampilkan **timeline status pesanan** secara visual. Pelanggan bisa melihat progres dari pending hingga completed, termasuk nomor resi jika sudah dikirim.
-
-### B. Komponen UI
+### C. Komponen UI - Halaman Detail (`/order/track/{token}`)
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Order Header** | ID pesanan, tanggal | Static |
-| **Status Timeline** | Visual timeline dengan icons | Dynamic based on status |
-| **Order Details** | Daftar item, total, alamat | Static |
-| **Tracking Number** | Nomor resi (jika shipped) | Copy button |
-| **Confirm Button** | "Pesanan Diterima" | Click (jika shipped) |
-| **Invoice Link** | Link download invoice | Click to download |
+| **Order Header** | Nomor pesanan, tanggal | Static |
+| **Status Timeline** | Visual progress | Static |
+| **Payment Info** | Instruksi bayar (Transfer/COD) | Static |
+| **Order Items** | Daftar produk dipesan | Static |
+| **Shipping Info** | Alamat, kurir, resi | Copy resi |
+| **Confirm Button** | Konfirmasi terima (jika shipped) | Click action |
 
-### C. Status Timeline
+### D. Status Timeline
 
-```mermaid
-graph LR
-    A["⏳ Pending"] --> B["⚙️ Processing"]
-    B --> C["🚚 Shipped"]
-    C --> D["✅ Completed"]
-    
-    style A fill:#fff9c4
-    style B fill:#bbdefb
-    style C fill:#e1bee7
-    style D fill:#c8e6c9
+```
+ [✅] Pesanan Dibuat
+      │
+ [✅] Pembayaran Dikonfirmasi
+      │
+ [✅] Diproses
+      │
+ [🔵] Dikirim (No. Resi: JNE123456)
+      │
+ [ ] Diterima
 ```
 
-### D. User Journey
+### E. Payment Instructions
 
-```mermaid
-flowchart TD
-    A["Buka Link Tracking"] --> B["Lihat Status"]
-    B --> C{"Status Shipped?"}
-    C -->|Ya| D["Lihat Nomor Resi"]
-    D --> E["Tunggu Paket"]
-    E --> F["Paket Sampai"]
-    F --> G["Klik 'Pesanan Diterima'"]
-    G --> H["Status → Completed"]
-    C -->|Belum| I["Tunggu Update"]
-    I --> B
+**Transfer Bank:**
+```
+┌──────────────────────────────────────┐
+│ 💳 Instruksi Pembayaran              │
+├──────────────────────────────────────┤
+│ Silakan transfer ke rekening:        │
+│                                      │
+│ BCA: 1234-5678-90 a.n Ivo Karya     │
+│ BRI: 0987-6543-21 a.n Ivo Karya     │
+│                                      │
+│ Total: Rp 150.000                    │
+│                                      │
+│ Kirim bukti transfer ke WA Admin    │
+└──────────────────────────────────────┘
+```
+
+**COD:**
+```
+┌──────────────────────────────────────┐
+│ 💰 Pembayaran COD                    │
+├──────────────────────────────────────┤
+│ Siapkan uang tunai sebesar:          │
+│                                      │
+│ Rp 165.000                           │
+│ (Termasuk ongkir)                    │
+│                                      │
+│ Bayar saat kurir mengantar pesanan  │
+└──────────────────────────────────────┘
 ```
 
 ---
 
-## 7. 📰 Artikel
+## 6. 📰 Daftar Artikel
 
 **URL**: `/articles`
 
 ### A. Tujuan Halaman
-
-Menampilkan **daftar artikel/blog** yang dipublikasikan oleh admin. Konten bisa berupa tips, berita UMKM, atau cerita di balik produk.
+Menampilkan artikel blog untuk edukasi pelanggan tentang produk, tips memasak, dan informasi UMKM.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Article Grid** | Card artikel dengan thumbnail | Click → detail |
+| **Page Header** | Judul "Artikel & Tips" | Static |
+| **Article Grid** | Grid artikel dengan thumbnail | Click navigation |
 | **Article Card** | Gambar, judul, excerpt | Hover effect |
-| **Date Badge** | Tanggal publikasi | Static |
+| **Pagination** | Navigasi halaman | Click |
+
+### C. Article Card
+
+```
+┌─────────────────────────────┐
+│  [📷 Featured Image]        │
+├─────────────────────────────┤
+│  📅 1 Februari 2026         │
+│  Judul Artikel yang Menarik │
+│  Cuplikan singkat artikel   │
+│  yang memberikan gambaran...│
+│                             │
+│  [Baca Selengkapnya →]      │
+└─────────────────────────────┘
+```
 
 ---
 
-## 8. 📖 Detail Artikel
+## 7. 📖 Detail Artikel
 
 **URL**: `/articles/{slug}`
 
 ### A. Tujuan Halaman
-
-Menampilkan **konten lengkap artikel** dengan formatting yang proper.
+Menampilkan konten artikel lengkap dengan format yang nyaman dibaca.
 
 ### B. Komponen UI
 
 | Komponen | Deskripsi | Interaktivitas |
 |:---------|:----------|:---------------|
-| **Featured Image** | Gambar utama artikel | Static |
-| **Title & Meta** | Judul, tanggal, author | Static |
-| **Article Content** | Body artikel (rich text) | Static |
-| **Share Buttons** | Tombol share sosmed | Click to share |
-| **Related Articles** | Artikel lain | Click → navigate |
+| **Article Header** | Judul, tanggal publish | Static |
+| **Featured Image** | Gambar utama | Static |
+| **Article Content** | Konten HTML lengkap | Static |
+| **Share Buttons** | Share ke sosmed | Click action |
+| **Related Articles** | Artikel terkait | Click navigation |
+| **Back Link** | Kembali ke daftar | Click navigation |
+
+---
+
+## 8. 🔐 Autentikasi
+
+### A. Halaman Login `/login`
+
+| Komponen | Deskripsi |
+|:---------|:----------|
+| Email Input | Field email dengan validasi |
+| Password Input | Field password dengan toggle show |
+| Remember Me | Checkbox untuk sesi panjang |
+| Login Button | Submit login |
+| Register Link | Link ke halaman register |
+| Forgot Password | Link reset password |
+
+### B. Halaman Register `/register`
+
+| Komponen | Deskripsi |
+|:---------|:----------|
+| Name Input | Nama lengkap |
+| Email Input | Email dengan validasi unique |
+| Password Input | Minimum 8 karakter |
+| Confirm Password | Harus sama dengan password |
+| Register Button | Submit registrasi |
+| Login Link | Link ke halaman login |
+
+### C. Halaman Lupa Password `/forgot-password`
+
+| Komponen | Deskripsi |
+|:---------|:----------|
+| Email Input | Email akun yang terdaftar |
+| Send Link Button | Kirim link reset |
+| Back to Login | Link kembali ke login |
+
+---
+
+## Komponen Global
+
+### A. Navigasi Publik
+
+```mermaid
+graph LR
+    Logo[🏠 Logo] --> Home[Beranda]
+    Home --> Catalog[Katalog]
+    Catalog --> Articles[Artikel]
+    Articles --> Track[Lacak Pesanan]
+    Track --> Cart[🛒 Keranjang]
+```
+
+### B. Footer
+
+| Section | Konten |
+|:--------|:-------|
+| **Brand** | Logo, tagline, deskripsi singkat |
+| **Links** | Beranda, Katalog, Artikel, Lacak |
+| **Contact** | WhatsApp, Instagram, Facebook |
+| **Copyright** | © 2026 UMKM Ivo Karya |
+| **Admin Link** | Link tersembunyi ke `/admin` |
+
+### C. Chatbot Widget
+
+Widget bantuan interaktif yang muncul di pojok kanan bawah semua halaman.
+
+**Fitur:**
+- Quick questions (FAQ)
+- Link ke WhatsApp admin
+- Panduan navigasi
+
+```mermaid
+flowchart TD
+    Widget[💬 Chatbot Widget]
+    Widget --> Open[Klik untuk buka]
+    Open --> Chat[Chat Interface]
+    Chat --> Question[Tulis pertanyaan]
+    Question --> Response[Respons otomatis]
+    Response --> WA{Perlu bantuan lebih?}
+    WA -->|Ya| OpenWA[Buka WhatsApp Admin]
+    WA -->|Tidak| Chat
+```
 
 ---
 
 ## 📱 Responsivitas
 
-Semua halaman publik didesain **mobile-first** dengan breakpoints:
+### Breakpoints
 
-| Device | Breakpoint | Layout |
-|:-------|:-----------|:-------|
-| Mobile | < 640px | 1 kolom, menu hamburger |
-| Tablet | 640px - 1024px | 2 kolom, sidebar collapsed |
-| Desktop | > 1024px | 3-4 kolom, full navigation |
+| Device | Width | Grid Columns |
+|:-------|:------|:-------------|
+| Mobile | < 640px | 1 kolom |
+| Tablet | 640px - 1024px | 2 kolom |
+| Desktop | > 1024px | 3-4 kolom |
 
----
+### Mobile Optimizations
 
-## 🔍 SEO Metadata
-
-| Halaman | Title Tag | Meta Description |
-|:--------|:----------|:-----------------|
-| Landing | "Ivo Karya - Abon Ikan Premium UMKM Sidrap" | "Produk abon ikan dan sapi berkualitas..." |
-| Katalog | "Katalog Produk - Ivo Karya" | "Lihat koleksi lengkap produk..." |
-| Detail | "{nama_produk} - Ivo Karya" | Dynamic dari deskripsi |
-| Artikel | "{judul_artikel} - Blog Ivo Karya" | Excerpt artikel |
+1. ✅ Hamburger menu untuk navigasi
+2. ✅ Touch-friendly buttons (min 44px)
+3. ✅ Lazy loading images
+4. ✅ Simplified checkout form
+5. ✅ Fixed bottom cart button
 
 ---
 
-## ♿ Aksesibilitas
+## 🔍 SEO Implementation
 
-- **ARIA Labels**: Semua tombol dan link memiliki label deskriptif
-- **Keyboard Navigation**: Tab order yang logis
-- **Color Contrast**: Minimum ratio 4.5:1 untuk teks
-- **Alt Text**: Semua gambar memiliki alt text deskriptif
+### Meta Tags per Halaman
+
+| Halaman | Title Pattern | Description |
+|:--------|:--------------|:------------|
+| Home | Ivo Karya - Abon Ikan & Sapi Khas Sidrap | Deskripsi brand |
+| Katalog | Katalog Produk - Ivo Karya | Daftar produk abon |
+| Produk | {nama} - Ivo Karya | Deskripsi produk |
+| Artikel | {judul} - Blog Ivo Karya | Cuplikan artikel |
+
+### Structured Data
+
+- Product schema untuk halaman produk
+- Article schema untuk halaman artikel
+- LocalBusiness schema untuk homepage
 
 ---
 
-<p align="center">
-  <em>Dokumentasi ini dibuat untuk keperluan akademis (Tugas Akhir/Skripsi)</em>
-</p>
+*Dokumentasi ini dibuat untuk keperluan Tugas Akhir/Skripsi*  
+**Universitas Ichsan Sidenreng Rappang** © 2026

@@ -1,72 +1,83 @@
-# 📊 Panduan Dashboard Admin
+# 📊 Panduan Dashboard Admin Ivo Karya
 
-> **Platform E-Commerce Ivo Karya** - Dokumentasi Lengkap Panel Administrasi Filament v3
+> **Dokumentasi Lengkap Panel Admin Filament v3**
 
 ---
 
-## 📋 Ringkasan Halaman Admin
+## 📋 Daftar Isi
+
+1. [Ringkasan Halaman Admin](#ringkasan-halaman-admin)
+2. [Dashboard Utama](#1--dashboard-utama)
+3. [Manajemen Produk](#2--manajemen-produk)
+4. [Manajemen Kategori](#3--manajemen-kategori)
+5. [Manajemen Pesanan](#4--manajemen-pesanan)
+6. [Manajemen Artikel](#5--manajemen-artikel)
+7. [Moderasi Review](#6--moderasi-review)
+8. [Pengaturan Sistem](#7--pengaturan-sistem)
+9. [Diagram Alur Data Global](#diagram-alur-data-global)
+
+---
+
+## Ringkasan Halaman Admin
 
 | No | Halaman | URL | Kategori | Fitur Khusus |
-|:--:|:--------|:----|:---------|:-------------|
-| 1 | Dashboard | `/admin` | MAIN | Charts, Stats Overview, Analytics |
-| 2 | Products | `/admin/products` | DATA | CRUD Produk, Manajemen Stok |
-| 3 | Orders | `/admin/orders` | DATA | Manajemen Pesanan, Notifikasi WA |
-| 4 | Categories | `/admin/categories` | DATA | CRUD Kategori Produk |
-| 5 | Articles | `/admin/articles` | CONTENT | CMS Blog/Artikel |
-| 6 | Reviews | `/admin/reviews` | CONTENT | Moderasi Ulasan Pelanggan |
-| 7 | Settings | `/admin/settings` | SYSTEM | Konfigurasi Sistem |
+|:---|:--------|:----|:---------|:-------------|
+| 1 | Dashboard | `/admin` | MAIN | Widget statistik, grafik penjualan |
+| 2 | Produk | `/admin/products` | DATA | CRUD, upload gambar, SEO meta |
+| 3 | Kategori | `/admin/categories` | DATA | CRUD, auto-slug |
+| 4 | Pesanan | `/admin/orders` | DATA | Status tracking, notifikasi WA |
+| 5 | Artikel | `/admin/articles` | CONTENT | Rich editor, publish toggle |
+| 6 | Review | `/admin/reviews` | CONTENT | Moderasi, approve/reject |
+| 7 | Pengaturan | `/admin/settings` | SYSTEM | Konfigurasi dinamis |
 
 ---
 
-## 1. 📈 Dashboard Utama
+## 1. 📊 Dashboard Utama
 
 **URL**: `/admin`
 
 ### A. Fungsi Utama
 
-1. **Monitoring Bisnis Real-time**: Dashboard menyajikan ringkasan statistik bisnis secara langsung, memungkinkan pemilik usaha untuk melihat performa penjualan tanpa perlu membuka laporan manual.
+1. **Monitoring Real-time**: Dashboard menampilkan statistik penjualan terkini secara real-time, memungkinkan admin memantau performa bisnis tanpa perlu membuka laporan terpisah.
 
-2. **Visualisasi Data Penjualan**: Grafik interaktif menampilkan tren penjualan bulanan, perbandingan target vs aktual, dan distribusi status pesanan untuk pengambilan keputusan berbasis data.
+2. **Visualisasi Data**: Grafik interaktif menampilkan tren pendapatan bulanan dan distribusi status pesanan, membantu pengambilan keputusan berbasis data.
 
-3. **Alert Sistem**: Widget menampilkan jumlah pesanan pending dan review yang menunggu moderasi, memastikan admin tidak melewatkan tugas penting.
+3. **Quick Overview**: Widget ringkasan menampilkan metrik kunci seperti total pendapatan, jumlah pesanan pending, dan pertumbuhan pelanggan.
 
-4. **Quick Access**: Dari dashboard, admin dapat langsung mengakses semua modul pengelolaan data melalui sidebar navigasi.
+4. **Action Center**: Akses cepat ke pesanan yang memerlukan tindakan segera (pending payment, ready to ship).
 
-### B. Fitur yang Tersedia (Widgets)
+5. **Performance Tracking**: Perbandingan target produksi 50kg vs penjualan aktual untuk monitoring gap.
 
-| Widget | Deskripsi | Teknologi |
-|:-------|:----------|:----------|
-| **Stats Overview** | 4 kartu statistik: Total Pesanan, Pendapatan, Pesanan Pending, Review Pending | Filament StatsOverviewWidget |
-| **Monthly Sales Chart** | Grafik garis pendapatan bulanan 12 bulan terakhir | Filament ChartWidget (Line) |
-| **Production vs Sales** | Perbandingan target produksi 50kg vs penjualan aktual | Filament ChartWidget (Bar) |
-| **Order Status Chart** | Pie chart distribusi status pesanan | Filament ChartWidget (Pie) |
-| **Customer Growth** | Grafik pertumbuhan pelanggan baru per bulan | Filament ChartWidget (Line) |
+### B. Fitur yang Tersedia
+
+| Fitur | Deskripsi | Teknologi |
+|:------|:----------|:----------|
+| **Stats Overview** | 4 kartu statistik (Pendapatan, Pesanan, Pending, Customer) | Filament Widget |
+| **Monthly Revenue Chart** | Grafik garis pendapatan 6 bulan terakhir | Chart.js via Filament |
+| **Order Status Distribution** | Pie chart status pesanan | Chart.js via Filament |
+| **Recent Orders Table** | 5 pesanan terbaru dengan aksi cepat | Filament Table |
+| **Low Stock Alert** | Notifikasi produk dengan stok < 10 | Custom Widget |
 
 ### C. Diagram Alur Kerja
 
 ```mermaid
 flowchart TD
-    A[("👨‍💼 Admin Login")] --> B["Masuk Dashboard"]
-    B --> C{"Lihat Statistik"}
+    Start([Admin Login]) --> Dashboard[📊 Dashboard Utama]
+    Dashboard --> Stats[Lihat Statistik]
+    Dashboard --> Charts[Lihat Grafik]
+    Dashboard --> Recent[Lihat Pesanan Terbaru]
     
-    C --> D["📊 Cek Stats Overview"]
-    D --> E{"Ada Pending?"}
-    E -->|Ya| F["Klik untuk kelola"]
-    E -->|Tidak| G["Lanjut analisis"]
+    Stats --> Action1{Ada pesanan pending?}
+    Action1 -->|Ya| OrderPage[Ke Halaman Pesanan]
+    Action1 -->|Tidak| Charts
     
-    C --> H["📈 Analisis Charts"]
-    H --> I["Lihat Tren Penjualan"]
-    I --> J["Bandingkan Target"]
-    J --> K{"Perlu Aksi?"}
-    K -->|Ya| L["Buat Strategi"]
-    K -->|Tidak| M["Monitor Berkala"]
+    Charts --> Analyze[Analisis Tren]
+    Recent --> Detail[Lihat Detail Pesanan]
     
-    F --> N["Proses Pesanan/Review"]
-    L --> O["Update Produk/Promo"]
-    
-    style A fill:#fff3e0
-    style D fill:#e3f2fd
-    style H fill:#e8f5e9
+    OrderPage --> Process[Proses Pesanan]
+    Process --> UpdateStatus[Update Status]
+    UpdateStatus --> SendNotif[Kirim Notifikasi WA]
+    SendNotif --> End([Selesai])
 ```
 
 ---
@@ -77,158 +88,198 @@ flowchart TD
 
 ### A. Fungsi Utama
 
-1. **CRUD Produk Lengkap**: Menambah, melihat, mengedit, dan menghapus produk dengan form yang terstruktur. Setiap field telah divalidasi untuk mencegah input tidak valid.
+1. **CRUD Produk**: Menambah, mengedit, melihat, dan menghapus produk dengan antarmuka yang intuitif. Form validasi memastikan data konsisten.
 
-2. **Manajemen Stok**: Tracking stok real-time dengan field khusus untuk berat produk (gram). Sistem otomatis menghitung total berat pesanan saat checkout.
+2. **Manajemen Stok**: Tracking stok real-time dengan warning otomatis saat stok menipis. Stok terintegrasi dengan sistem checkout.
 
-3. **SEO-Friendly Slug**: Slug URL otomatis di-generate dari nama produk untuk optimasi mesin pencari dan URL yang mudah dibaca.
+3. **Pricing Flexibility**: Mendukung harga normal dan harga diskon. Sistem otomatis menghitung persentase diskon.
 
-4. **Upload Gambar**: Fitur upload gambar produk dengan preview, mendukung format JPG, PNG, dan WebP.
+4. **SEO Optimization**: Field meta title dan description untuk optimasi mesin pencari. Preview snippet seperti tampil di Google.
 
-5. **Toggle Aktif/Nonaktif**: Produk dapat dengan cepat diaktifkan atau dinonaktifkan tanpa menghapus data.
-
-### B. Fitur yang Tersedia
-
-| Fitur | Deskripsi | Teknologi |
-|:------|:----------|:----------|
-| Data Table | Tabel interaktif dengan sorting, filtering, search | Filament Table |
-| Bulk Actions | Hapus massal, toggle status massal | Filament BulkActions |
-| Create Form | Form pembuatan produk dengan validasi | Filament Form |
-| Edit Form | Form edit dengan pre-populated data | Filament Form |
-| Image Upload | Upload gambar dengan preview | Filament FileUpload |
-| Category Select | Dropdown kategori dengan search | Filament Select |
-
-### C. Diagram Alur Kerja
-
-```mermaid
-flowchart TD
-    A["Buka Products"] --> B{"Aksi?"}
-    
-    B -->|"Tambah"| C["Klik Create"]
-    C --> D["Isi Form Produk"]
-    D --> E["Upload Gambar"]
-    E --> F["Pilih Kategori"]
-    F --> G["Set Harga & Stok"]
-    G --> H["Submit"]
-    H --> I[("💾 Simpan ke DB")]
-    
-    B -->|"Edit"| J["Klik Icon Edit"]
-    J --> K["Modifikasi Data"]
-    K --> H
-    
-    B -->|"Hapus"| L["Klik Icon Hapus"]
-    L --> M{"Konfirmasi?"}
-    M -->|Ya| N[("🗑️ Delete dari DB")]
-    M -->|Tidak| B
-    
-    B -->|"Toggle Status"| O["Klik Toggle"]
-    O --> P["Update is_active"]
-    P --> I
-    
-    style C fill:#e8f5e9
-    style J fill:#fff3e0
-    style L fill:#ffebee
-    style O fill:#e3f2fd
-```
-
----
-
-## 3. 📋 Manajemen Pesanan
-
-**URL**: `/admin/orders`
-
-### A. Fungsi Utama
-
-1. **Tracking Status Pesanan**: Memantau seluruh lifecycle pesanan dari `pending` hingga `completed`. Status ditampilkan dengan badge berwarna untuk identifikasi cepat.
-
-2. **Update Status dengan Notifikasi Otomatis**: Saat admin mengubah status ke `shipped`, sistem otomatis mengirim notifikasi WhatsApp berisi nomor resi ke pelanggan melalui Fonnte API.
-
-3. **Detail Pesanan Lengkap**: Melihat data pelanggan, daftar item yang dipesan (dalam format JSON), total harga, berat, dan alamat pengiriman.
-
-4. **Input Nomor Resi**: Field khusus untuk memasukkan tracking number yang akan dikirim ke pelanggan.
-
-5. **Filter Status**: Memfilter pesanan berdasarkan status untuk fokus pada pesanan yang perlu diproses.
+5. **Media Management**: Upload dan crop gambar produk langsung dari dashboard dengan kompresi otomatis.
 
 ### B. Fitur yang Tersedia
 
 | Fitur | Deskripsi | Teknologi |
 |:------|:----------|:----------|
-| Status Badge | Badge berwarna (Pending=Kuning, Processing=Biru, Shipped=Ungu, Completed=Hijau) | Filament Badge |
-| Quick Actions | Update status langsung dari tabel | Filament Actions |
-| Tracking Input | Field untuk nomor resi pengiriman | Filament TextInput |
-| Order Items View | Tampilan daftar item dalam pesanan | Filament Repeater |
-| Date Filter | Filter berdasarkan tanggal pesanan | Filament Filter |
-| Export | Ekspor data pesanan ke Excel/CSV | Filament Export |
+| **Data Table** | Tabel produk dengan sort, filter, search | Filament Table |
+| **Create/Edit Form** | Form validasi multi-field | Filament Forms |
+| **Image Upload** | Upload dengan preview & crop | Filament FileUpload |
+| **Category Selector** | Dropdown kategori dengan search | Filament Select |
+| **Rich Description** | WYSIWYG editor untuk deskripsi | Filament RichEditor |
+| **Bulk Actions** | Hapus/Archive multiple produk | Filament Bulk Actions |
+| **Export** | Export ke CSV/Excel | Filament Export |
 
 ### C. Diagram Alur Kerja
 
 ```mermaid
 flowchart TD
-    A["Buka Orders"] --> B["Lihat Daftar Pesanan"]
-    B --> C{"Filter Status?"}
-    C -->|Ya| D["Pilih Status Filter"]
-    D --> B
-    C -->|Tidak| E["Pilih Pesanan"]
+    Start([Buka Manajemen Produk]) --> List[📋 Daftar Produk]
+    List --> Filter{Filter/Search?}
     
-    E --> F{"Update Status?"}
-    F -->|Pending → Processing| G["Klik Update Status"]
-    G --> H["Konfirmasi Pembayaran"]
-    H --> I[("💾 Update DB")]
+    Filter -->|Ya| ApplyFilter[Terapkan Filter]
+    ApplyFilter --> List
+    Filter -->|Tidak| Action{Pilih Aksi}
     
-    F -->|Processing → Shipped| J["Klik Update Status"]
-    J --> K["Input Nomor Resi"]
-    K --> L[("💾 Update DB")]
-    L --> M["📲 Trigger FonnteService"]
-    M --> N["Kirim WA ke Pelanggan"]
-    N --> O["✉️ Notifikasi Terkirim"]
+    Action -->|Tambah| CreateForm[📝 Form Tambah Produk]
+    Action -->|Edit| EditForm[✏️ Form Edit Produk]
+    Action -->|Hapus| ConfirmDelete{Konfirmasi Hapus?}
+    Action -->|Lihat| ViewDetail[👁️ Detail Produk]
     
-    F -->|Shipped → Completed| P["Pelanggan Konfirmasi"]
-    P --> Q[("💾 Update DB")]
+    CreateForm --> Validate{Valid?}
+    EditForm --> Validate
     
-    style G fill:#fff3e0
-    style J fill:#e1bee7
-    style M fill:#c8e6c9
+    Validate -->|Ya| SaveDB[(💾 Simpan ke Database)]
+    Validate -->|Tidak| ShowError[Tampilkan Error]
+    ShowError --> CreateForm
+    
+    ConfirmDelete -->|Ya| DeleteDB[(🗑️ Hapus dari Database)]
+    ConfirmDelete -->|Tidak| List
+    
+    SaveDB --> Success[✅ Sukses]
+    DeleteDB --> Success
+    Success --> List
 ```
+
+### D. Fields Produk
+
+| Field | Tipe | Required | Validasi |
+|:------|:-----|:---------|:---------|
+| name | string | ✅ | max:255 |
+| slug | string | ✅ | unique, auto-generate |
+| category_id | foreign key | ✅ | exists:categories |
+| description | text | ❌ | - |
+| price | decimal | ✅ | min:0 |
+| discount_price | decimal | ❌ | lt:price |
+| stock | integer | ✅ | min:0 |
+| weight | integer | ✅ | min:1 (gram) |
+| image | file | ❌ | image, max:2MB |
+| meta_title | string | ❌ | max:60 |
+| meta_description | string | ❌ | max:160 |
 
 ---
 
-## 4. 🏷️ Manajemen Kategori
+## 3. 🏷️ Manajemen Kategori
 
 **URL**: `/admin/categories`
 
 ### A. Fungsi Utama
 
-1. **Organisasi Produk**: Mengelompokkan produk ke dalam kategori untuk navigasi yang lebih mudah bagi pelanggan.
+1. **Organisasi Produk**: Mengelompokkan produk berdasarkan jenis (Abon Ikan, Abon Sapi, Paket Hemat) untuk navigasi yang lebih mudah.
 
-2. **CRUD Sederhana**: Interface minimalis untuk menambah, edit, dan hapus kategori.
+2. **Auto-Slug Generation**: Sistem otomatis membuat URL-friendly slug dari nama kategori untuk SEO-friendly URLs.
 
-3. **Gambar Kategori**: Upload gambar representatif untuk setiap kategori.
+3. **Hierarchical Structure**: Mendukung kategori parent-child untuk struktur yang lebih kompleks di masa depan.
 
-4. **Slug Otomatis**: URL-friendly slug di-generate dari nama kategori.
+4. **Product Counter**: Menampilkan jumlah produk di setiap kategori untuk gambaran distribusi inventaris.
 
 ### B. Fitur yang Tersedia
 
 | Fitur | Deskripsi | Teknologi |
 |:------|:----------|:----------|
-| Data Table | Daftar kategori dengan jumlah produk | Filament Table |
-| Image Upload | Upload gambar kategori | Filament FileUpload |
-| Auto Slug | Generate slug dari nama | Filament TextInput |
-| Product Count | Menampilkan jumlah produk per kategori | Relationship Count |
+| **Simple CRUD** | Create, Read, Update, Delete | Filament Resource |
+| **Auto Slug** | Generate slug dari nama | Spatie Sluggable |
+| **Product Count** | Kolom jumlah produk | Eloquent withCount |
+| **Inline Edit** | Edit langsung di tabel | Filament Inline Actions |
 
 ### C. Diagram Alur Kerja
 
 ```mermaid
-flowchart LR
-    A["Buka Categories"] --> B{"Aksi?"}
-    B -->|"Tambah"| C["Create Kategori"]
-    B -->|"Edit"| D["Edit Kategori"]
-    B -->|"Hapus"| E{"Ada Produk?"}
-    E -->|Ya| F["⚠️ Tidak Bisa Hapus"]
-    E -->|Tidak| G["Hapus Kategori"]
+flowchart TD
+    Start([Buka Manajemen Kategori]) --> List[📋 Daftar Kategori]
+    List --> Action{Pilih Aksi}
     
-    C --> H["Isi Nama & Upload Gambar"]
-    D --> H
-    H --> I[("💾 Simpan")]
+    Action -->|Tambah| Create[📝 Tambah Kategori]
+    Action -->|Edit| Edit[✏️ Edit Kategori]
+    Action -->|Hapus| Check{Ada produk terkait?}
+    
+    Create --> InputName[Input Nama]
+    InputName --> AutoSlug[Generate Slug Otomatis]
+    AutoSlug --> Save[(💾 Simpan)]
+    
+    Edit --> UpdateData[Update Data]
+    UpdateData --> Save
+    
+    Check -->|Ya| Warning[⚠️ Tidak bisa hapus]
+    Check -->|Tidak| Delete[(🗑️ Hapus)]
+    
+    Save --> List
+    Delete --> List
+    Warning --> List
+```
+
+---
+
+## 4. 📋 Manajemen Pesanan
+
+**URL**: `/admin/orders`
+
+### A. Fungsi Utama
+
+1. **Order Tracking**: Melacak status setiap pesanan dari pending hingga completed dengan timeline visual.
+
+2. **Status Management**: Update status pesanan (Pending → Processing → Shipped → Completed) dengan satu klik.
+
+3. **WhatsApp Notification**: Mengirim notifikasi otomatis ke pelanggan saat status berubah via Fonnte API.
+
+4. **Resi Integration**: Input nomor resi pengiriman yang otomatis dikirim ke pelanggan.
+
+5. **Payment Verification**: Verifikasi pembayaran untuk metode transfer bank.
+
+6. **Order Details**: Melihat detail lengkap pesanan termasuk items, alamat, dan riwayat status.
+
+### B. Fitur yang Tersedia
+
+| Fitur | Deskripsi | Teknologi |
+|:------|:----------|:----------|
+| **Order Table** | Tabel dengan filter status | Filament Table |
+| **Status Badges** | Badge warna per status | Filament Badge Column |
+| **Quick Actions** | Update status, input resi | Filament Actions |
+| **WA Notification** | Kirim notifikasi WhatsApp | FonnteService |
+| **Timeline View** | Riwayat perubahan status | Custom View |
+| **Payment Method** | Filter by COD/Transfer | Filament Filter |
+| **Export Orders** | Export ke Excel | Filament Export |
+
+### C. Status Pesanan
+
+| Status | Warna | Deskripsi | Trigger WA |
+|:-------|:------|:----------|:-----------|
+| `pending` | 🟡 Yellow | Menunggu pembayaran | ❌ |
+| `processing` | 🔵 Blue | Diproses admin | ✅ |
+| `shipped` | 🟣 Purple | Dalam pengiriman | ✅ + Resi |
+| `completed` | 🟢 Green | Selesai | ❌ |
+| `cancelled` | 🔴 Red | Dibatalkan | ✅ |
+
+### D. Diagram Alur Kerja
+
+```mermaid
+flowchart TD
+    Start([Buka Manajemen Pesanan]) --> List[📋 Daftar Pesanan]
+    List --> Filter[Filter by Status]
+    Filter --> Select[Pilih Pesanan]
+    
+    Select --> View[👁️ Lihat Detail]
+    View --> CheckPayment{Payment Method?}
+    
+    CheckPayment -->|Transfer| VerifyPayment{Bukti Transfer Valid?}
+    CheckPayment -->|COD| Processing[Set: Processing]
+    
+    VerifyPayment -->|Ya| Processing
+    VerifyPayment -->|Tidak| Reject[Set: Cancelled]
+    
+    Processing --> Prepare[Siapkan Paket]
+    Prepare --> InputResi[📦 Input Nomor Resi]
+    InputResi --> SetShipped[Set: Shipped]
+    SetShipped --> SendWA[📱 Kirim Notifikasi + Resi]
+    
+    SendWA --> WaitDelivery[Tunggu Pengiriman]
+    WaitDelivery --> Received{Pelanggan Konfirmasi?}
+    
+    Received -->|Ya| SetCompleted[Set: Completed]
+    Received -->|Tidak| WaitDelivery
+    
+    SetCompleted --> End([✅ Selesai])
+    Reject --> End
 ```
 
 ---
@@ -239,94 +290,117 @@ flowchart LR
 
 ### A. Fungsi Utama
 
-1. **Content Management System**: Platform blogging sederhana untuk mempublikasikan artikel tentang produk, tips, atau berita UMKM.
+1. **Content Management**: Membuat dan mengelola artikel blog untuk SEO dan engagement pelanggan.
 
-2. **Rich Text Editor**: Editor WYSIWYG untuk menulis konten dengan formatting (bold, italic, heading, list, link).
+2. **Rich Text Editor**: WYSIWYG editor dengan format text, gambar, dan embed media.
 
-3. **Draft & Publish**: Toggle untuk menyimpan artikel sebagai draft atau langsung dipublikasikan.
+3. **Publish Control**: Toggle publish/draft untuk artikel yang belum siap dipublikasikan.
 
-4. **Featured Image**: Upload gambar utama artikel untuk tampilan di listing.
+4. **SEO Friendly**: Auto-generate slug dari judul dengan format URL-friendly.
+
+5. **Featured Image**: Upload gambar utama dengan crop dan resize otomatis.
 
 ### B. Fitur yang Tersedia
 
 | Fitur | Deskripsi | Teknologi |
 |:------|:----------|:----------|
-| Rich Editor | Editor teks dengan toolbar formatting | Filament RichEditor |
-| Toggle Publish | Switch untuk status publikasi | Filament Toggle |
-| Image Upload | Upload featured image | Filament FileUpload |
-| Slug Generator | Auto-generate dari judul | Filament TextInput |
-| Preview | Preview artikel sebelum publish | Custom Action |
+| **Article CRUD** | Create, Read, Update, Delete | Filament Resource |
+| **Rich Editor** | WYSIWYG content editor | Filament RichEditor |
+| **Image Upload** | Featured image | Filament FileUpload |
+| **Publish Toggle** | Draft/Published status | Filament Toggle |
+| **Preview** | Preview sebelum publish | Custom Action |
+| **Auto Slug** | Generate dari judul | Spatie Sluggable |
 
 ### C. Diagram Alur Kerja
 
 ```mermaid
 flowchart TD
-    A["Buka Articles"] --> B{"Aksi?"}
-    B -->|"Buat Artikel"| C["Create Article"]
-    C --> D["Isi Judul"]
-    D --> E["Tulis Konten"]
-    E --> F["Upload Gambar"]
-    F --> G{"Publish Sekarang?"}
-    G -->|Ya| H["Toggle is_published = true"]
-    G -->|Tidak| I["Simpan sebagai Draft"]
-    H --> J[("💾 Simpan & Publish")]
-    I --> K[("💾 Simpan Draft")]
+    Start([Buka Manajemen Artikel]) --> List[📋 Daftar Artikel]
+    List --> Action{Pilih Aksi}
     
-    B -->|"Edit"| L["Edit Artikel"]
-    L --> E
+    Action -->|Buat| Create[📝 Form Artikel Baru]
+    Action -->|Edit| Edit[✏️ Edit Artikel]
+    Action -->|Publish| Toggle{Status Sekarang?}
     
-    B -->|"Hapus"| M["Konfirmasi Hapus"]
-    M --> N[("🗑️ Delete")]
+    Create --> WriteContent[Tulis Konten]
+    WriteContent --> UploadImage[Upload Gambar]
+    UploadImage --> SetSlug[Generate Slug]
+    SetSlug --> SaveDraft[💾 Simpan Draft]
+    
+    Edit --> UpdateContent[Update Konten]
+    UpdateContent --> SaveDraft
+    
+    Toggle -->|Draft| Publish[✅ Set Published]
+    Toggle -->|Published| Unpublish[📝 Set Draft]
+    
+    SaveDraft --> Preview{Preview?}
+    Preview -->|Ya| ViewPreview[👁️ Lihat Preview]
+    Preview -->|Tidak| List
+    ViewPreview --> List
+    
+    Publish --> List
+    Unpublish --> List
 ```
 
 ---
 
-## 6. ⭐ Moderasi Ulasan
+## 6. ⭐ Moderasi Review
 
 **URL**: `/admin/reviews`
 
 ### A. Fungsi Utama
 
-1. **Quality Control**: Semua ulasan pelanggan harus dimoderasi sebelum tampil di halaman produk. Ini mencegah spam dan konten tidak pantas.
+1. **Content Moderation**: Memoderasi review pelanggan sebelum ditampilkan di halaman produk.
 
-2. **Approve/Reject**: Admin dapat menyetujui atau menolak ulasan dengan satu klik.
+2. **Approval System**: Approve atau reject review berdasarkan kebijakan konten.
 
-3. **Support Guest Review**: Sistem mendukung ulasan dari guest (tanpa login) dengan field `customer_name` terpisah.
+3. **Spam Prevention**: Filter review spam atau inappropriate content.
 
-4. **View Attached Images**: Pelanggan dapat menyertakan foto produk, yang bisa direview oleh admin.
+4. **Rating Overview**: Melihat distribusi rating per produk.
+
+5. **Guest Reviews**: Mendukung review dari guest (tanpa akun) dengan nama pelanggan.
 
 ### B. Fitur yang Tersedia
 
 | Fitur | Deskripsi | Teknologi |
 |:------|:----------|:----------|
-| Status Filter | Filter: Pending, Approved, Rejected | Filament Filter |
-| Quick Approve | Tombol approve langsung dari tabel | Filament Action |
-| Rating Display | Tampilan rating bintang | Filament TextColumn |
-| Image Preview | Preview gambar yang di-upload | Filament ImageColumn |
-| Product Link | Link ke produk yang direview | Filament Relationship |
+| **Review Table** | Tabel dengan filter status | Filament Table |
+| **Quick Approve** | Approve dengan satu klik | Filament Action |
+| **Bulk Approve** | Approve multiple review | Filament Bulk Action |
+| **Rating Stars** | Tampilan rating visual | Custom Column |
+| **Product Link** | Link ke produk terkait | Filament Relation |
+| **Customer Info** | Info pelanggan/guest | Filament Column |
 
-### C. Diagram Alur Kerja
+### C. Status Review
+
+| Status | Tampil di Publik | Aksi Admin |
+|:-------|:-----------------|:-----------|
+| `pending` | ❌ | Approve / Reject |
+| `approved` | ✅ | Revoke Approval |
+| `rejected` | ❌ | Re-approve |
+
+### D. Diagram Alur Kerja
 
 ```mermaid
 flowchart TD
-    A["Buka Reviews"] --> B["Filter: Pending"]
-    B --> C["Lihat Review Baru"]
-    C --> D{"Review Valid?"}
+    Start([Buka Moderasi Review]) --> List[📋 Daftar Review]
+    List --> Filter[Filter: Pending]
+    Filter --> Select[Pilih Review]
     
-    D -->|"Ya, Bagus"| E["Klik Approve"]
-    E --> F["is_approved = true"]
-    F --> G[("💾 Update DB")]
-    G --> H["✅ Tampil di Frontend"]
+    Select --> Read[📖 Baca Konten]
+    Read --> Check{Konten Layak?}
     
-    D -->|"Tidak, Spam/Invalid"| I["Klik Reject/Delete"]
-    I --> J[("🗑️ Remove")]
+    Check -->|Ya| Approve[✅ Approve]
+    Check -->|Tidak| Reject[❌ Reject]
+    Check -->|Spam| Delete[🗑️ Hapus]
     
-    D -->|"Perlu Review Gambar"| K["Klik View Detail"]
-    K --> L["Periksa Gambar"]
-    L --> D
+    Approve --> Show[Tampil di Halaman Produk]
+    Reject --> Hide[Tidak Ditampilkan]
+    Delete --> Remove[(Hapus dari Database)]
     
-    style E fill:#c8e6c9
-    style I fill:#ffcdd2
+    Show --> List
+    Hide --> List
+    Remove --> List
 ```
 
 ---
@@ -337,86 +411,128 @@ flowchart TD
 
 ### A. Fungsi Utama
 
-1. **Konfigurasi Dinamis**: Mengubah pengaturan sistem tanpa edit kode. Data disimpan dalam tabel key-value untuk fleksibilitas.
+1. **Dynamic Configuration**: Mengubah konfigurasi sistem tanpa edit kode (no-code).
 
-2. **WhatsApp Number**: Menyimpan nomor WhatsApp bisnis untuk notifikasi.
+2. **WhatsApp Settings**: Mengatur nomor WhatsApp admin dan token Fonnte.
 
-3. **Bank Account Info**: Informasi rekening bank untuk instruksi pembayaran di invoice.
+3. **Bank Account Info**: Mengatur info rekening untuk pembayaran transfer.
 
-4. **API Keys**: Menyimpan kunci API eksternal (Fonnte) secara aman.
+4. **Store Information**: Mengatur nama toko, alamat, dan informasi bisnis.
+
+5. **Shipping Settings**: Mengatur origin city dan API key untuk ongkir.
 
 ### B. Fitur yang Tersedia
 
 | Fitur | Deskripsi | Teknologi |
 |:------|:----------|:----------|
-| Key-Value Editor | Form untuk mengedit setting | Filament Form |
-| Sensitive Data | Masking untuk data sensitif | Filament PasswordInput |
-| Grouped Settings | Pengelompokan setting berdasarkan tipe | Filament Sections |
+| **Key-Value Store** | Simpan konfigurasi dinamis | Setting Model |
+| **Grouped Settings** | Grup berdasarkan kategori | Filament Sections |
+| **Secret Fields** | Mask untuk API keys | Filament Password |
+| **Validation** | Validasi format data | Filament Rules |
+| **Cache Refresh** | Clear cache setelah update | Custom Action |
 
-### C. Diagram Alur Kerja
+### C. Konfigurasi yang Tersedia
+
+| Key | Deskripsi | Contoh Nilai |
+|:----|:----------|:-------------|
+| `store_name` | Nama toko | Ivo Karya |
+| `store_phone` | Nomor telepon | 081234567890 |
+| `whatsapp_number` | Nomor WA admin | 6281234567890 |
+| `fonnte_token` | Token API Fonnte | abc123xyz |
+| `bank_bca` | Rekening BCA | 1234567890 |
+| `bank_bri` | Rekening BRI | 0987654321 |
+| `shipping_origin` | Origin city ID | 398 |
+| `rajaongkir_key` | API Key RajaOngkir | xxx |
+
+### D. Diagram Alur Kerja
 
 ```mermaid
-flowchart LR
-    A["Buka Settings"] --> B["Lihat Semua Setting"]
-    B --> C{"Edit Setting?"}
-    C -->|Ya| D["Pilih Setting"]
-    D --> E["Update Value"]
-    E --> F[("💾 Simpan")]
-    F --> G["Setting Aktif"]
-    C -->|Tidak| H["Kembali ke Dashboard"]
+flowchart TD
+    Start([Buka Pengaturan]) --> List[📋 Daftar Setting]
+    List --> Select[Pilih Setting]
+    
+    Select --> Edit[✏️ Edit Nilai]
+    Edit --> Validate{Valid?}
+    
+    Validate -->|Ya| Save[(💾 Simpan ke Database)]
+    Validate -->|Tidak| Error[Tampilkan Error]
+    Error --> Edit
+    
+    Save --> ClearCache[🔄 Clear Config Cache]
+    ClearCache --> Success[✅ Setting Tersimpan]
+    Success --> List
 ```
 
 ---
 
-## 📊 Diagram Alur Data Global
+## Diagram Alur Data Global
 
-Bagaimana data dari Admin Panel mengalir ke halaman publik:
+### Bagaimana Data Admin Mengalir ke Halaman Publik
 
 ```mermaid
 flowchart TB
-    subgraph "Admin Panel (Filament)"
-        A1["📦 Tambah Produk"]
-        A2["📋 Update Order Status"]
-        A3["📝 Publish Artikel"]
-        A4["⭐ Approve Review"]
-        A5["⚙️ Update Settings"]
+    subgraph "🔐 Admin Panel"
+        AdminProduct[Admin: Edit Produk]
+        AdminOrder[Admin: Update Status]
+        AdminArticle[Admin: Publish Artikel]
+        AdminReview[Admin: Approve Review]
+        AdminSetting[Admin: Update Setting]
     end
     
-    subgraph "Database"
-        DB[("🗄️ MySQL")]
+    subgraph "💾 Database"
+        DB[(MySQL Database)]
     end
     
-    subgraph "Public Frontend"
-        P1["🏠 Landing Page"]
-        P2["📦 Katalog Produk"]
-        P3["📄 Detail Produk"]
-        P4["📰 Halaman Artikel"]
-        P5["🔍 Track Pesanan"]
+    subgraph "🌐 Public Pages"
+        Catalog[Katalog Produk]
+        ProductDetail[Detail Produk]
+        Cart[Keranjang]
+        Track[Pelacakan Pesanan]
+        Articles[Halaman Artikel]
     end
     
-    subgraph "External"
-        WA["📲 WhatsApp Customer"]
+    subgraph "📱 External"
+        WhatsApp[WhatsApp Pelanggan]
     end
     
-    A1 --> DB
-    A2 --> DB
-    A2 --> WA
-    A3 --> DB
-    A4 --> DB
-    A5 --> DB
+    AdminProduct --> DB
+    AdminOrder --> DB
+    AdminArticle --> DB
+    AdminReview --> DB
+    AdminSetting --> DB
     
-    DB --> P1
-    DB --> P2
-    DB --> P3
-    DB --> P4
-    DB --> P5
+    DB --> Catalog
+    DB --> ProductDetail
+    DB --> Cart
+    DB --> Track
+    DB --> Articles
     
-    style DB fill:#fff9c4
-    style WA fill:#c8e6c9
+    AdminOrder -.->|Notifikasi| WhatsApp
+    
+    Cart -.->|Pesanan Baru| DB
+    DB -.->|Trigger| WhatsApp
 ```
 
 ---
 
-<p align="center">
-  <em>Dokumentasi ini dibuat untuk keperluan akademis (Tugas Akhir/Skripsi)</em>
-</p>
+## 📝 Catatan Teknis
+
+### Akses Admin Panel
+
+1. **URL**: `/admin` atau `/admin/login`
+2. **Default Credentials**: Dibuat via seeder atau registrasi
+3. **Middleware**: `auth`, `verified`
+4. **Authorization**: Filament Shield (opsional)
+
+### Best Practices
+
+1. ✅ Selalu backup database sebelum operasi bulk
+2. ✅ Gunakan preview sebelum publish artikel
+3. ✅ Moderasi review secara berkala
+4. ✅ Monitor stok produk via dashboard
+5. ✅ Update setting via panel, bukan langsung di database
+
+---
+
+*Dokumentasi ini dibuat untuk keperluan Tugas Akhir/Skripsi*  
+**Universitas Ichsan Sidenreng Rappang** © 2026
