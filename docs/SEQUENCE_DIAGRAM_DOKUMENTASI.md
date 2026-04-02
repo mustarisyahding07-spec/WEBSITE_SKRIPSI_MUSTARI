@@ -1,47 +1,42 @@
 # Dokumentasi Sequence Diagram — WEBSITE IVO KARYA
 
 > **Proyek**: Website Toko Online Ivo Karya  
-> **Framework**: Laravel 10 + Filament v3 + Livewire  
-> **Tanggal Dibuat**: 2 April 2026  
-> **Deskripsi**: Dokumen ini berisi sequence diagram lengkap untuk setiap halaman dalam sistem, menjelaskan alur interaksi antara User (Browser), Controller, Model, Database, dan layanan eksternal.
+> **Framework**: Laravel 10 + Filament v3 + Livewire 3  
+> **Tanggal Dibuat**: 2 April 2026
 
 ---
 
 ## Daftar Halaman
 
-| No | Halaman | Route | Keterangan |
-|----|---------|-------|------------|
-| 1 | [Beranda (Homepage)](#1-beranda-homepage) | `GET /` | Halaman utama toko |
-| 2 | [Katalog Produk](#2-katalog-produk) | `GET /katalog` | Daftar semua produk |
-| 3 | [Detail Produk](#3-detail-produk) | `GET /product/{slug}` | Halaman detail produk + ulasan |
-| 4 | [Keranjang Belanja](#4-keranjang-belanja) | `GET /cart` | Manajemen keranjang |
-| 5 | [Checkout & Pembayaran](#5-checkout--pembayaran) | `POST /checkout` | Proses pembuatan order |
-| 6 | [Lacak Pesanan (Token)](#6-lacak-pesanan-token) | `GET /order/track/{token}` | Tracking pesanan by token |
-| 7 | [Cari Pesanan](#7-cari-pesanan) | `GET /track` | Form pencarian pesanan |
-| 8 | [Daftar Artikel](#8-daftar-artikel) | `GET /articles` | Blog / artikel |
-| 9 | [Detail Artikel](#9-detail-artikel) | `GET /articles/{slug}` | Halaman baca artikel |
-| 10 | [Login](#10-login) | `GET /login` | Autentikasi pengguna |
-| 11 | [Register](#11-register) | `GET /register` | Pendaftaran akun baru |
-| 12 | [Lupa / Reset Password](#12-lupa--reset-password) | `GET /forgot-password` | Reset password via email |
-| 13 | [Profil User](#13-profil-user) | `GET /profile` | Edit profil pengguna |
-| 14 | [Admin Panel — Produk](#14-admin-panel--manajemen-produk) | `GET /admin/products` | Kelola produk (Filament) |
-| 15 | [Admin Panel — Pesanan](#15-admin-panel--manajemen-pesanan) | `GET /admin/orders` | Kelola dan proses pesanan |
-| 16 | [Admin Panel — Ulasan](#16-admin-panel--manajemen-ulasan) | `GET /admin/reviews` | Moderasi ulasan produk |
-| 17 | [API Shipping](#17-api-shipping) | `GET/POST /api/shipping/*` | Perhitungan ongkos kirim |
+| No | Halaman | Route |
+|----|---------|-------|
+| 1 | [Beranda](#1-beranda-homepage) | `GET /` |
+| 2 | [Katalog Produk](#2-katalog-produk) | `GET /katalog` |
+| 3 | [Detail Produk](#3-detail-produk) | `GET /product/{slug}` |
+| 4 | [Keranjang Belanja](#4-keranjang-belanja) | `GET /cart` |
+| 5 | [Checkout & Pembayaran](#5-checkout--pembayaran) | `POST /checkout` |
+| 6 | [Lacak Pesanan](#6-lacak-pesanan-token) | `GET /order/track/{token}` |
+| 7 | [Cari Pesanan](#7-cari-pesanan) | `GET /track` |
+| 8 | [Daftar Artikel](#8-daftar-artikel) | `GET /articles` |
+| 9 | [Detail Artikel](#9-detail-artikel) | `GET /articles/{slug}` |
+| 10 | [Login](#10-login) | `GET /login` |
+| 11 | [Register](#11-register) | `GET /register` |
+| 12 | [Lupa / Reset Password](#12-lupa--reset-password) | `GET /forgot-password` |
+| 13 | [Profil Pengguna](#13-profil-pengguna) | `GET /profile` |
+| 14 | [Admin — Manajemen Produk](#14-admin--manajemen-produk) | `GET /admin/products` |
+| 15 | [Admin — Manajemen Pesanan](#15-admin--manajemen-pesanan) | `GET /admin/orders` |
+| 16 | [Admin — Manajemen Ulasan](#16-admin--manajemen-ulasan) | `GET /admin/reviews` |
+| 17 | [API Shipping](#17-api-shipping) | `/api/shipping/*` |
 
 ---
 
 ## 1. Beranda (Homepage)
 
-### Deskripsi
-Halaman pertama yang dilihat pengunjung ketika membuka website. Menampilkan daftar produk terbaru dan 3 artikel terbaru. Mendukung filter produk berdasarkan kategori melalui query string `?category=slug`.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pengunjung (tamu atau yang sudah login)
-- **HomeController** — Mengatur logika halaman
-- **Product Model** — Mengambil data produk
-- **Article Model** — Mengambil data artikel
-- **Database** — Penyimpanan data
+Halaman beranda merupakan antarmuka pertama yang ditampilkan kepada pengguna saat mengakses sistem website toko online Ivo Karya. Berdasarkan alur yang dirancang, ketika pengguna mengirimkan permintaan HTTP GET ke rute `/`, sistem akan meneruskan permintaan tersebut kepada `HomeController` melalui mekanisme routing Laravel. Controller kemudian melakukan kueri terhadap tabel produk menggunakan `Product Model`. Apabila pengguna menyertakan parameter `category` pada URL, sistem akan menerapkan kondisi filter menggunakan metode `whereHas` untuk menyaring produk berdasarkan slug kategori yang dimaksud.
+
+Selain data produk, controller juga mengambil tiga artikel terbaru dari tabel artikel melalui `Article Model` dengan memanfaatkan metode `latest()->take(3)->get()`. Seluruh data yang diperoleh kemudian dikirimkan ke berkas tampilan `welcome.blade.php` sebagai variabel yang dapat diakses oleh templat. Hasil akhirnya adalah halaman beranda yang menampilkan daftar produk beserta cuplikan artikel terbaru secara dinamis kepada pengguna.
 
 ### Sequence Diagram
 
@@ -57,7 +52,6 @@ sequenceDiagram
 
     User->>Router: GET / (opsional: ?category=slug)
     Router->>HC: index(Request $request)
-
     HC->>ProductM: query()
     alt Ada filter kategori
         HC->>ProductM: whereHas('category', slug)
@@ -65,13 +59,11 @@ sequenceDiagram
     ProductM->>DB: SELECT products WHERE category.slug = ?
     DB-->>ProductM: Daftar produk
     ProductM-->>HC: $products collection
-
     HC->>ArticleM: latest()->take(3)->get()
-    ArticleM->>DB: SELECT articles ORDER BY created_at DESC LIMIT 3
+    ArticleM->>DB: SELECT articles LIMIT 3 ORDER BY created_at DESC
     DB-->>ArticleM: 3 artikel terbaru
     ArticleM-->>HC: $articles collection
-
-    HC->>View: return view('welcome', compact('products', 'articles'))
+    HC->>View: view('welcome', compact('products','articles'))
     View-->>User: Render halaman beranda (HTML)
 ```
 
@@ -79,15 +71,11 @@ sequenceDiagram
 
 ## 2. Katalog Produk
 
-### Deskripsi
-Halaman yang menampilkan semua produk dalam bentuk grid dengan filter berdasarkan kategori. Berbeda dengan beranda, halaman ini memuat **semua produk** beserta relasi kategori (`with('category')`). Terdapat sidebar atau dropdown filter untuk memilih kategori.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pengunjung toko
-- **HomeController** — Method `catalog()`
-- **Product Model** — Data produk + kategori
-- **Category Model** — Daftar kategori untuk filter
-- **Database** — Penyimpanan data
+Halaman katalog produk berfungsi sebagai pusat penjelajahan seluruh produk yang tersedia di toko. Berbeda dengan halaman beranda, halaman ini dirancang secara khusus untuk menampilkan keseluruhan data produk disertai informasi kategorinya melalui mekanisme eager loading (`with('category')`). Ketika pengguna mengakses rute `/katalog`, permintaan diteruskan ke metode `catalog()` pada `HomeController`.
+
+Controller selanjutnya membangun kueri produk dengan memuat relasi kategori secara bersamaan guna menghindari masalah N+1 query. Apabila pengguna menyertakan parameter `category` pada URL, sistem menerapkan filter berbasis slug kategori. Di samping data produk, sistem juga mengambil seluruh data kategori yang tersedia melalui `Category Model` untuk keperluan antarmuka filter yang ditampilkan kepada pengguna. Kedua kumpulan data tersebut kemudian diteruskan ke berkas tampilan `front/catalog.blade.php`, yang merender tampilan grid produk secara dinamis lengkap dengan navigasi filter kategori.
 
 ### Sequence Diagram
 
@@ -103,38 +91,30 @@ sequenceDiagram
 
     User->>Router: GET /katalog (opsional: ?category=slug)
     Router->>HC: catalog(Request $request)
-
     HC->>ProductM: with('category')
     alt Ada parameter category
         HC->>ProductM: whereHas('category', slug)
     end
     ProductM->>DB: SELECT products WITH category WHERE ...
-    DB-->>ProductM: Produk + data kategori
+    DB-->>ProductM: Produk beserta data kategori
     ProductM-->>HC: $products
-
     HC->>CategoryM: all()
     CategoryM->>DB: SELECT * FROM categories
-    DB-->>CategoryM: Semua kategori
+    DB-->>CategoryM: Seluruh kategori
     CategoryM-->>HC: $categories
-
-    HC->>View: return view('front.catalog', compact('products','categories'))
-    View-->>User: Tampilan grid produk + filter kategori
+    HC->>View: view('front.catalog', compact('products','categories'))
+    View-->>User: Grid produk + filter kategori
 ```
 
 ---
 
 ## 3. Detail Produk
 
-### Deskripsi
-Halaman yang menampilkan detail lengkap sebuah produk: nama, deskripsi, harga, stok, gambar, dan ulasan pelanggan. Menggunakan **Livewire component** (`ProductReviews`) untuk mengelola form ulasan secara real-time tanpa page reload. Pengguna yang login nama-nya diambil otomatis, sedangkan tamu harus mengisi nama secara manual.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pengunjung / pembeli
-- **HomeController** — Method `show()`
-- **Product Model** — Data produk
-- **ProductReviews (Livewire)** — Komponen ulasan
-- **Review Model** — Menyimpan/membaca ulasan
-- **Database** — Penyimpanan data
+Halaman detail produk menampilkan informasi lengkap mengenai suatu produk, meliputi nama, deskripsi, harga, ketersediaan stok, dan galeri gambar. Proses diawali saat pengguna mengakses rute `/product/{slug}`, di mana Laravel secara otomatis melakukan resolusi model melalui mekanisme Route Model Binding berdasarkan atribut `slug` pada tabel produk. Hasil resolusi diteruskan langsung ke metode `show()` pada `HomeController` tanpa memerlukan kueri tambahan secara eksplisit.
+
+Keistimewaan halaman ini terletak pada integrasi komponen **Livewire** bernama `ProductReviews` yang memungkinkan pengelolaan ulasan produk secara reaktif tanpa pemuatan ulang halaman (_page reload_). Komponen tersebut melakukan pengambilan data ulasan yang telah disetujui (`is_approved = true`) saat pertama kali dimuat. Ketika pengguna mengirimkan formulir ulasan, sistem melakukan validasi terhadap atribut rating, komentar, serta nama pengguna (khusus bagi pengguna yang tidak terautentikasi). Apabila terdapat berkas gambar yang diunggah, sistem menyimpannya ke direktori penyimpanan publik. Setelah data ulasan berhasil disimpan ke basis data, komponen secara otomatis memperbarui tampilan daftar ulasan tanpa memuat ulang halaman secara keseluruhan.
 
 ### Sequence Diagram
 
@@ -143,34 +123,31 @@ sequenceDiagram
     actor User as User/Browser
     participant Router as Laravel Router
     participant HC as HomeController
-    participant ProductM as Product Model
     participant DB as Database
     participant View as front/products/show.blade.php
-    participant LW as Livewire: ProductReviews
+    participant LW as Livewire ProductReviews
 
     User->>Router: GET /product/{slug}
     Router->>HC: show(Product $product)
-    Note over HC: Route Model Binding otomatis cari product by slug
+    Note over HC: Route Model Binding — resolve by slug
     HC->>DB: SELECT products WHERE slug = ?
     DB-->>HC: Data produk
-    HC->>View: return view('front.products.show', compact('product'))
-    View-->>User: Render halaman produk + embed Livewire component
+    HC->>View: view('front.products.show', compact('product'))
+    View-->>User: Halaman produk + embed Livewire component
 
     User->>LW: mount(Product $product)
-    LW->>DB: SELECT reviews WHERE product_id = ? AND is_approved = 1
-    DB-->>LW: Daftar ulasan tersetujui
-    LW-->>View: Render daftar ulasan + form
+    LW->>DB: SELECT reviews WHERE product_id=? AND is_approved=1
+    DB-->>LW: Daftar ulasan
+    LW-->>View: Render ulasan + form
 
-    User->>LW: Isi form & klik Kirim Ulasan
-    LW->>LW: validate() — rating, comment, name (jika tamu)
+    User->>LW: Submit form ulasan
+    LW->>LW: validate() rating, comment, name
     alt Ada upload foto
-        LW->>LW: image->store('reviews', 'public')
+        LW->>LW: image->store('reviews','public')
     end
-    LW->>DB: INSERT INTO reviews (product_id, user_id, name, rating, comment, image, is_approved)
+    LW->>DB: INSERT INTO reviews
     DB-->>LW: Review tersimpan
-    LW->>LW: reset ratings, comment, name, image
-    LW-->>User: Flash message Terima kasih! Ulasan Anda telah diterbitkan.
-    LW->>DB: SELECT reviews (refresh) WHERE is_approved = 1
+    LW->>DB: SELECT reviews (refresh)
     DB-->>LW: Ulasan terbaru
     LW-->>User: Re-render daftar ulasan (real-time)
 ```
@@ -179,13 +156,11 @@ sequenceDiagram
 
 ## 4. Keranjang Belanja
 
-### Deskripsi
-Halaman manajemen keranjang belanja. Data keranjang disimpan di **Session** (bukan database), sehingga tidak memerlukan login. Halaman ini juga memiliki fitur pembersihan otomatis untuk menghapus item "ghost" yang harganya nol atau tanpa nama. Pengguna dapat mengubah jumlah atau menghapus item.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pembeli
-- **CartController** — Mengatur logika keranjang
-- **Session** — Penyimpanan keranjang sementara
+Halaman keranjang belanja dirancang sebagai antarmuka pengelolaan produk yang akan dibeli oleh pengguna sebelum melanjutkan ke proses checkout. Sistem ini mengimplementasikan penyimpanan data keranjang berbasis **sesi PHP** (_session_), sehingga pengguna tidak diwajibkan untuk memiliki akun atau melakukan autentikasi terlebih dahulu. Pendekatan ini bertujuan untuk meminimalkan hambatan dalam pengalaman berbelanja.
+
+Ketika halaman diakses, `CartController` mengambil data keranjang dari sesi dan melakukan proses pembersihan otomatis terhadap item-item yang tidak valid, yakni produk dengan harga nol atau tanpa nama (_ghost items_). Setelah proses validasi, sistem menghitung total harga keseluruhan item dalam keranjang. Pengguna juga dapat menambahkan produk ke keranjang dari halaman lain melalui rute `/cart/add/{product}`, yang mendukung tiga mode respons: respons JSON untuk permintaan berbasis AJAX, pengalihan ke halaman keranjang untuk mode _"Beli Sekarang"_, serta pengalihan kembali ke halaman sebelumnya untuk mode standar. Selain itu, tersedia fitur pembaruan kuantitas dan penghapusan item yang masing-masing menggunakan metode HTTP PATCH dan DELETE.
 
 ### Sequence Diagram
 
@@ -201,28 +176,26 @@ sequenceDiagram
     Router->>CC: index()
     CC->>Session: get('cart', [])
     Session-->>CC: Data keranjang (array)
-
-    CC->>CC: Filter item tidak valid (price=0 atau name kosong)
+    CC->>CC: Filter item tidak valid
     alt Ada item tidak valid
         CC->>Session: put('cart', $cleanCart)
     end
-
-    CC->>CC: Hitung total = sum(price * quantity)
-    CC->>View: view('front.cart', compact('cart', 'total'))
+    CC->>CC: Hitung total harga
+    CC->>View: view('front.cart', compact('cart','total'))
     View-->>User: Tampilan keranjang + total harga
 
     User->>Router: GET /cart/add/{product}
     Router->>CC: add(Request, Product $product)
     CC->>Session: get('cart', [])
-    alt Produk sudah ada di keranjang
+    alt Produk sudah ada
         CC->>Session: Tambah quantity
     else Produk baru
-        CC->>Session: Tambahkan item baru (name, qty, price, image, weight)
+        CC->>Session: Tambah item baru
     end
     CC->>Session: put('cart', $cart)
     alt Request AJAX
         CC-->>User: JSON {message, cart_count}
-    else Action = buy_now
+    else Buy Now
         CC-->>User: Redirect ke /cart
     else Normal
         CC-->>User: Redirect back + flash success
@@ -234,7 +207,7 @@ sequenceDiagram
 
     User->>Router: DELETE /cart/remove/{id}
     Router->>CC: remove(Request)
-    CC->>Session: unset cart item
+    CC->>Session: unset item
     CC-->>User: Redirect back + flash success
 ```
 
@@ -242,16 +215,11 @@ sequenceDiagram
 
 ## 5. Checkout & Pembayaran
 
-### Deskripsi
-Proses paling kritis dalam sistem. Pengguna mengisi formulir data pengiriman (nama, alamat, kota, kode pos, kurir) dan memilih metode pembayaran (transfer bank atau COD). Sistem akan melakukan validasi stok secara **transaksional** (menggunakan `DB::beginTransaction`) untuk memastikan tidak ada race condition. Setelah berhasil, keranjang dikosongkan dan user diarahkan ke halaman tracking dengan token unik.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pembeli yang melakukan checkout
-- **CartController** — Method `checkout()`
-- **Product Model** — Validasi & decrement stok
-- **Order Model** — Membuat record pesanan baru
-- **Session** — Sumber data keranjang
-- **Database** — Transaksi penyimpanan
+Proses checkout merupakan alur paling krusial dalam sistem toko online ini, karena melibatkan operasi basis data yang memerlukan konsistensi dan integritas data secara ketat. Pada tahap ini, pengguna diwajibkan mengisi formulir data pengiriman yang mencakup nama penerima, alamat, kode pos, identitas kota tujuan, pilihan kurir dan layanan pengiriman, serta metode pembayaran (transfer bank atau _cash on delivery_).
+
+Setelah melewati validasi formulir, sistem tidak langsung membuat data pesanan, melainkan terlebih dahulu memulai transaksi basis data menggunakan `DB::beginTransaction()`. Di dalam transaksi tersebut, setiap produk dalam keranjang dikunci baris datanya menggunakan mekanisme `lockForUpdate()` untuk mencegah kondisi _race condition_ pada situasi pembelian bersamaan. Sistem kemudian memverifikasi ketersediaan stok secara satu per satu; apabila ditemukan ketidakcukupan stok atau produk yang tidak lagi tersedia, sistem segera melakukan rollback transaksi dan menampilkan pesan kesalahan kepada pengguna. Jika seluruh validasi stok berhasil, stok produk dikurangi secara atomik, data pesanan dibuat dengan token pelacak unik yang dihasilkan secara otomatis melalui fungsi `bin2hex(random_bytes(16))`, dan transaksi dikonfirmasi (_commit_). Setelah itu, data keranjang pada sesi dihapus dan pengguna dialihkan ke halaman pelacakan pesanan.
 
 ### Sequence Diagram
 
@@ -259,50 +227,37 @@ Proses paling kritis dalam sistem. Pengguna mengisi formulir data pengiriman (na
 sequenceDiagram
     actor User as User/Browser
     participant CC as CartController
-    participant Request as Request Validation
     participant Session as Laravel Session
     participant DB as Database
     participant ProductM as Product Model
     participant OrderM as Order Model
 
     User->>CC: POST /checkout (form data)
-    CC->>Request: validate address, name, phone, courier, payment_method, dll
-
+    CC->>CC: validate() address, name, phone, courier, payment_method
     alt Validasi gagal
-        Request-->>User: Redirect back + errors
+        CC-->>User: Redirect back + errors
     end
-
     CC->>Session: get('cart')
     alt Keranjang kosong
         CC-->>User: Redirect back: Keranjang kosong
     end
-
     CC->>DB: BEGIN TRANSACTION
-
     loop Setiap item di keranjang
-        CC->>ProductM: where id lockForUpdate first
-        ProductM->>DB: SELECT product FOR UPDATE (row locked)
-        DB-->>ProductM: Data produk
-
-        alt Produk tidak ditemukan
+        CC->>ProductM: lockForUpdate()->first()
+        ProductM->>DB: SELECT product FOR UPDATE
+        DB-->>ProductM: Data produk (terkunci)
+        alt Produk tidak ada / stok kurang
             CC->>DB: ROLLBACK
-            CC-->>User: Error Produk tidak tersedia
-        else Stok tidak cukup
-            CC->>DB: ROLLBACK
-            CC-->>User: Error Stok tidak mencukupi
+            CC-->>User: Error pesan kesalahan
         end
-
-        CC->>ProductM: decrement stock
+        CC->>ProductM: decrement('stock', qty)
         ProductM->>DB: UPDATE products SET stock = stock - qty
-        CC->>CC: Akumulasi subtotal dan total_weight
     end
-
-    CC->>OrderM: create dengan semua data order
-    OrderM->>DB: INSERT INTO orders (auto-generate tracking_token via bin2hex)
-    DB-->>OrderM: Order record + tracking_token
-
+    CC->>OrderM: create([...data order, tracking_token])
+    OrderM->>DB: INSERT INTO orders
+    DB-->>OrderM: Order tersimpan
     CC->>DB: COMMIT
-    CC->>Session: forget cart
+    CC->>Session: forget('cart')
     CC-->>User: Redirect ke /order/track/{tracking_token}
 ```
 
@@ -310,14 +265,11 @@ sequenceDiagram
 
 ## 6. Lacak Pesanan (Token)
 
-### Deskripsi
-Halaman yang menampilkan status dan detail pesanan menggunakan **tracking token** unik yang digenerate saat checkout. Halaman ini tidak memerlukan login. Terdapat tombol **"Konfirmasi Terima"** yang dapat diklik jika status pesanan adalah `shipped`, yang akan mengubah status menjadi `completed`.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pembeli yang ingin cek pesanan
-- **CartController** — Method `track()` dan `confirmReceive()`
-- **Order Model** — Data pesanan berdasarkan token
-- **Database** — Penyimpanan data
+Halaman pelacakan pesanan berbasis token dirancang untuk memberikan akses kepada pelanggan dalam memantau status pesanan mereka tanpa memerlukan autentikasi akun. Sistem menggunakan token pelacak unik (`tracking_token`) sepanjang 32 karakter heksadesimal yang dihasilkan secara otomatis pada saat pembentukan pesanan. URL pelacakan kemudian disebarkan kepada pelanggan melalui pesan WhatsApp yang dikirim secara otomatis oleh sistem.
+
+Ketika pengguna mengakses rute `/order/track/{token}`, `CartController` melakukan pencarian rekod pesanan berdasarkan nilai token tersebut menggunakan metode `firstOrFail()`. Apabila token tidak ditemukan dalam basis data, sistem secara otomatis menampilkan halaman kesalahan 404. Jika token valid, halaman akan menampilkan seluruh informasi pesanan secara komprehensif, termasuk status pesanan, daftar produk yang dipesan, informasi pengiriman, dan nomor resi apabila telah tersedia. Selain itu, terdapat aksi **konfirmasi penerimaan barang** yang dapat dilakukan oleh pelanggan ketika status pesanan berada pada tahap `shipped`. Konfirmasi tersebut akan mengubah status pesanan menjadi `completed` sebagai penanda bahwa transaksi telah selesai secara keseluruhan.
 
 ### Sequence Diagram
 
@@ -332,28 +284,23 @@ sequenceDiagram
 
     User->>Router: GET /order/track/{token}
     Router->>CC: track($token)
-    CC->>OrderM: where tracking_token = token, firstOrFail
+    CC->>OrderM: where('tracking_token', token)->firstOrFail()
     OrderM->>DB: SELECT orders WHERE tracking_token = ?
-
     alt Token tidak ditemukan
-        DB-->>OrderM: null
-        OrderM-->>CC: 404 ModelNotFoundException
+        DB-->>OrderM: null → ModelNotFoundException
         CC-->>User: Halaman 404
     else Token valid
         DB-->>OrderM: Data order lengkap
         OrderM-->>CC: $order
         CC->>View: view('front.track', compact('order'))
-        View-->>User: Status pesanan + detail item + info pengiriman
+        View-->>User: Status + detail + info pengiriman
     end
-
     alt Status == shipped
         User->>Router: POST /order/confirm/{token}
         Router->>CC: confirmReceive($token)
-        CC->>OrderM: where tracking_token
-        OrderM->>DB: SELECT order
-        CC->>OrderM: update status = completed
+        CC->>OrderM: update(['status'=>'completed'])
         OrderM->>DB: UPDATE orders SET status=completed
-        CC-->>User: Redirect back + flash Pesanan dikonfirmasi selesai
+        CC-->>User: Redirect back + flash sukses
     end
 ```
 
@@ -361,14 +308,11 @@ sequenceDiagram
 
 ## 7. Cari Pesanan
 
-### Deskripsi
-Halaman form pencarian sederhana yang memungkinkan pelanggan mencari status pesanan menggunakan **Order ID**. Jika ID ditemukan, detail pesanan langsung ditampilkan di halaman yang sama.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pelanggan
-- **TrackOrderController** — Logika pencarian
-- **Order Model** — Query berdasarkan ID
-- **Database** — Penyimpanan data
+Halaman pencarian pesanan menyediakan formulir sederhana yang memungkinkan pelanggan untuk menelusuri status pesanan mereka menggunakan nomor identitas pesanan (_Order ID_). Antarmuka ini berfungsi sebagai alternatif bagi pelanggan yang tidak memiliki tautan pelacakan berbasis token namun masih membutuhkan informasi status pesanan.
+
+Ketika halaman pertama kali diakses tanpa parameter apapun, `TrackOrderController` merender formulir pencarian dengan variabel `$order` bernilai `null`. Setelah pengguna memasukkan nomor pesanan dan mengirimkan formulir melalui parameter URL `?order_id`, controller melakukan pencarian rekod pesanan menggunakan metode `find()` pada `Order Model`. Jika pesanan dengan identitas tersebut tidak ditemukan dalam basis data, sistem menampilkan pesan kesalahan kepada pengguna melalui mekanisme sesi _flash_. Sebaliknya, apabila pesanan berhasil ditemukan, tampilan akan diperbarui untuk menampilkan seluruh detail status pesanan secara langsung pada halaman yang sama.
 
 ### Sequence Diagram
 
@@ -384,22 +328,21 @@ sequenceDiagram
     User->>Router: GET /track
     Router->>TOC: index(Request)
     Note over TOC: Tidak ada order_id → $order = null
-    TOC->>View: view('front.track-order', order null)
+    TOC->>View: view('front.track-order', order=null)
     View-->>User: Form input Order ID
 
     User->>Router: GET /track?order_id=123
     Router->>TOC: index(Request dengan order_id)
     TOC->>OrderM: find($request->order_id)
-    OrderM->>DB: SELECT orders WHERE id = 123
-
-    alt Pesanan tidak ditemukan
+    OrderM->>DB: SELECT orders WHERE id = ?
+    alt Tidak ditemukan
         DB-->>OrderM: null
-        TOC-->>User: Redirect back + error Pesanan tidak ditemukan
-    else Pesanan ditemukan
+        TOC-->>User: Redirect back + error
+    else Ditemukan
         DB-->>OrderM: Data order
         OrderM-->>TOC: $order
         TOC->>View: view dengan data order
-        View-->>User: Tampilan detail status pesanan
+        View-->>User: Detail status pesanan
     end
 ```
 
@@ -407,14 +350,11 @@ sequenceDiagram
 
 ## 8. Daftar Artikel
 
-### Deskripsi
-Halaman blog/artikel toko yang menampilkan daftar artikel dalam format pagination (9 artikel per halaman) dengan relasi kategori. Berfungsi sebagai konten pemasaran dan SEO toko.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pengunjung
-- **ArticleController** — Method `index()`
-- **Article Model** — Data artikel + kategori
-- **Database** — Penyimpanan data
+Halaman daftar artikel merupakan bagian dari fitur konten pemasaran yang dirancang untuk mendukung strategi optimasi mesin pencari (_Search Engine Optimization_) website toko online Ivo Karya. Halaman ini menampilkan kumpulan artikel yang telah dipublikasikan oleh administrator dalam format grid yang terstruktur dengan navigasi pagination.
+
+Ketika pengguna mengakses rute `/articles`, `ArticleController` melakukan pengambilan data artikel menggunakan metode `with('category')` untuk memuat relasi kategori secara efisien, dikombinasikan dengan pengurutan berdasarkan tanggal terbaru (`latest()`) dan pembatasan hasil menjadi sembilan artikel per halaman menggunakan metode `paginate(9)`. Laravel secara otomatis menangani logika pagination berdasarkan parameter `?page` yang terdapat pada URL. Hasil kueri berupa objek `LengthAwarePaginator` yang kemudian diteruskan ke berkas tampilan untuk dirender sebagai antarmuka yang dilengkapi dengan tautan navigasi antar halaman.
 
 ### Sequence Diagram
 
@@ -431,24 +371,21 @@ sequenceDiagram
     Router->>AC: index()
     AC->>ArticleM: with('category')->latest()->paginate(9)
     ArticleM->>DB: SELECT articles WITH category ORDER BY created_at DESC LIMIT 9 OFFSET ?
-    DB-->>ArticleM: 9 artikel + kategori + pagination meta
-    ArticleM-->>AC: $articles LengthAwarePaginator
-    AC->>View: view artikel index
-    View-->>User: Grid artikel dengan navigasi pagination
+    DB-->>ArticleM: Artikel + kategori + pagination meta
+    ArticleM-->>AC: $articles (LengthAwarePaginator)
+    AC->>View: view('front.articles.index', compact('articles'))
+    View-->>User: Grid artikel + navigasi pagination
 ```
 
 ---
 
 ## 9. Detail Artikel
 
-### Deskripsi
-Halaman pembacaan satu artikel lengkap. Menggunakan **Route Model Binding** dengan slug untuk URL yang SEO-friendly. Menampilkan konten artikel, kategori, dan tanggal publikasi.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pembaca
-- **ArticleController** — Method `show()`
-- **Article Model** — Data artikel berdasarkan slug
-- **Database** — Penyimpanan data
+Halaman detail artikel menampilkan konten lengkap dari sebuah artikel yang dipilih oleh pengguna. Sistem mengimplementasikan mekanisme **Route Model Binding** berbasis atribut `slug` untuk menghasilkan URL yang ramah mesin pencari sekaligus meningkatkan kejelasan alamat halaman bagi pengguna. Dengan mekanisme ini, Laravel secara otomatis melakukan resolusi model `Article` berdasarkan nilai slug yang terdapat pada segmen URL tanpa memerlukan penulisan kueri secara eksplisit di dalam controller.
+
+Ketika pengguna mengakses rute `/articles/{slug}`, router meneruskan permintaan ke metode `show()` pada `ArticleController` beserta objek artikel yang telah terselesaikan. Apabila slug yang dimaksud tidak ditemukan dalam basis data, Laravel secara otomatis merespons dengan kode status HTTP 404. Jika artikel berhasil ditemukan, controller meneruskan objek artikel tersebut ke berkas tampilan `front/articles/show.blade.php` untuk dirender sebagai halaman artikel yang memuat judul, kategori, waktu publikasi, dan konten lengkap artikel.
 
 ### Sequence Diagram
 
@@ -462,16 +399,15 @@ sequenceDiagram
 
     User->>Router: GET /articles/{slug}
     Router->>AC: show(Article $article)
-    Note over Router,AC: Route Model Binding: resolve Article by slug
+    Note over Router,AC: Route Model Binding — resolve by slug
     AC->>DB: SELECT articles WHERE slug = ?
-
-    alt Artikel tidak ditemukan
+    alt Tidak ditemukan
         DB-->>Router: null → 404
         Router-->>User: Halaman 404
-    else Artikel ditemukan
+    else Ditemukan
         DB-->>AC: Data artikel
-        AC->>View: view artikel show
-        View-->>User: Halaman detail artikel (judul, konten, kategori, tanggal)
+        AC->>View: view('front.articles.show', compact('article'))
+        View-->>User: Konten artikel lengkap
     end
 ```
 
@@ -479,14 +415,11 @@ sequenceDiagram
 
 ## 10. Login
 
-### Deskripsi
-Halaman autentikasi pengguna menggunakan sistem bawaan Laravel Breeze. Mendukung opsi "Remember Me" untuk sesi persisten. Setelah login berhasil, sesi diregenerasi untuk keamanan dan pengguna diarahkan ke dashboard (yang di-redirect ke `/admin`).
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Calon pengguna
-- **AuthenticatedSessionController** — Proses login
-- **Auth Facade** — Laravel Authentication
-- **Database** — Verifikasi kredensial
+Halaman login merupakan gerbang autentikasi yang memungkinkan pengguna terdaftar untuk mengakses fitur-fitur yang memerlukan identitas terverifikasi. Sistem autentikasi pada aplikasi ini dibangun di atas fondasi Laravel Breeze yang menyediakan implementasi autentikasi berbasis sesi (_session-based authentication_) secara lengkap dan aman.
+
+Halaman login hanya dapat diakses oleh pengguna yang belum terautentikasi berkat penerapan _middleware_ `guest`. Ketika pengguna mengirimkan formulir login, `AuthenticatedSessionController` melakukan validasi format masukan, kemudian mendelegasikan proses verifikasi kredensial kepada `Auth Facade` Laravel. Fasad tersebut memverifikasi kecocokan antara surel dan kata sandi yang dimasukkan dengan data yang tersimpan di basis data, di mana kata sandi dibandingkan menggunakan algoritma hashing `bcrypt`. Apabila kredensial tidak valid, sistem mengembalikan pesan kesalahan yang sesuai. Jika autentikasi berhasil, identitas sesi diregenerasi menggunakan metode `regenerate()` guna mencegah serangan _session fixation_. Pengguna selanjutnya dialihkan ke halaman dasbor yang secara otomatis meneruskan akses ke panel administrasi Filament.
 
 ### Sequence Diagram
 
@@ -500,7 +433,7 @@ sequenceDiagram
     participant Session as Laravel Session
 
     User->>Router: GET /login
-    Note over Router: Middleware guest aktif — redirect jika sudah login
+    Note over Router: Middleware guest — redirect jika sudah login
     Router->>ASC: create()
     ASC-->>User: Form login
 
@@ -508,17 +441,16 @@ sequenceDiagram
     Router->>ASC: store(LoginRequest)
     ASC->>ASC: validate email dan password
     ASC->>AuthFacade: attempt(email, password, remember)
-    AuthFacade->>DB: SELECT user WHERE email = ? AND verify password hash
-
+    AuthFacade->>DB: SELECT user WHERE email=? AND verify password hash
     alt Kredensial salah
-        DB-->>AuthFacade: User tidak ditemukan
+        DB-->>AuthFacade: Tidak ditemukan
         AuthFacade-->>ASC: false
-        ASC-->>User: Redirect back + error credentials do not match
+        ASC-->>User: Redirect back + error
     else Kredensial benar
-        DB-->>AuthFacade: User data
+        DB-->>AuthFacade: Data user
         AuthFacade-->>ASC: true
         ASC->>Session: regenerate()
-        ASC-->>User: Redirect ke /dashboard (redirect ke /admin)
+        ASC-->>User: Redirect ke /dashboard (→ /admin)
     end
 ```
 
@@ -526,15 +458,11 @@ sequenceDiagram
 
 ## 11. Register
 
-### Deskripsi
-Halaman pendaftaran akun baru. Password di-hash menggunakan `bcrypt` sebelum disimpan ke database. Setelah registrasi berhasil, pengguna otomatis login.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Calon pengguna baru
-- **RegisteredUserController** — Proses pendaftaran
-- **Auth Facade** — Login otomatis
-- **User Model** — Membuat user baru
-- **Database** — Menyimpan data
+Halaman registrasi menyediakan mekanisme pendaftaran akun baru bagi pengguna yang ingin memanfaatkan fitur-fitur yang memerlukan identitas terverifikasi, seperti penulisan ulasan produk. Halaman ini hanya dapat diakses oleh pengguna yang belum terautentikasi, sebagaimana halaman login, melalui perlindungan _middleware_ `guest`.
+
+Ketika pengguna mengirimkan formulir pendaftaran, `RegisteredUserController` melakukan serangkaian validasi terhadap masukan yang diterima, meliputi keunikan surel pada tabel pengguna, konfirmasi kesesuaian kata sandi, dan pemenuhan panjang minimum kata sandi sebesar delapan karakter. Apabila validasi berhasil, controller membuat rekod pengguna baru di basis data dengan kata sandi yang telah melalui proses hashing menggunakan fungsi `Hash::make()` dari Laravel. Setelah rekod berhasil disimpan, pengguna secara otomatis diautentikasi menggunakan metode `Auth::login()` tanpa perlu melalui proses login terpisah. Sistem kemudian mengirimkan notifikasi verifikasi surel kepada alamat yang didaftarkan dan mengalihkan pengguna ke halaman dasbor.
 
 ### Sequence Diagram
 
@@ -551,18 +479,16 @@ sequenceDiagram
     Router->>RUC: create()
     RUC-->>User: Form pendaftaran
 
-    User->>Router: POST /register (name, email, password, password_confirmation)
+    User->>Router: POST /register (name, email, password, confirmation)
     Router->>RUC: store(Request)
-    RUC->>RUC: validate name, email unique, password confirmed min 8
-
+    RUC->>RUC: validate name, email unique, password confirmed min:8
     alt Validasi gagal
         RUC-->>User: Redirect back + validation errors
     else Validasi berhasil
-        RUC->>UserM: create(name, email, password: Hash::make)
+        RUC->>UserM: create([name, email, password => Hash::make])
         UserM->>DB: INSERT INTO users
-        DB-->>UserM: User baru dengan ID
+        DB-->>UserM: User baru + ID
         UserM-->>RUC: $user
-
         RUC->>AuthFacade: login($user)
         RUC-->>User: Redirect ke /dashboard + kirim email verifikasi
     end
@@ -572,108 +498,89 @@ sequenceDiagram
 
 ## 12. Lupa / Reset Password
 
-### Deskripsi
-Alur dua langkah untuk memulihkan akses akun. Pertama, pengguna memasukkan email untuk menerima link reset. Kedua, pengguna membuka link dan memasukkan password baru. Token reset disimpan di tabel `password_reset_tokens` dengan masa berlaku terbatas.
+### Penjelasan
 
-### Aktor
-- **User/Browser** — Pengguna yang lupa password
-- **PasswordResetLinkController** — Kirim email link reset
-- **NewPasswordController** — Proses reset password baru
-- **Database** — Menyimpan token & update password
-- **Mail Service** — Pengiriman email
+Fitur pemulihan kata sandi diimplementasikan melalui alur dua tahap yang terstruktur untuk menjamin keamanan proses penggantian kata sandi. Pada tahap pertama, pengguna memasukkan alamat surel pada formulir yang tersedia di rute `/forgot-password`. `PasswordResetLinkController` kemudian memverifikasi keberadaan surel tersebut dalam basis data dan membuat token reset yang unik untuk disimpan pada tabel `password_reset_tokens`.
+
+Sebagai pertimbangan keamanan, sistem selalu menampilkan pesan yang mengindikasikan keberhasilan pengiriman tautan, terlepas dari apakah surel tersebut terdaftar dalam sistem atau tidak. Pendekatan ini bertujuan untuk mencegah enumerasi akun oleh pihak yang tidak berwenang. Tautan reset yang memuat token unik kemudian dikirimkan ke alamat surel pengguna melalui layanan pengiriman surat elektronik. Pada tahap kedua, pengguna mengakses tautan tersebut dan mengisi formulir kata sandi baru. `NewPasswordController` memverifikasi validitas dan masa berlaku token, kemudian memperbarui kata sandi pengguna di basis data setelah token dikonfirmasi sah. Token yang telah digunakan kemudian dihapus untuk mencegah penggunaan ulang.
 
 ### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
     actor User as User/Browser
-    participant Router as Laravel Router
     participant PRLC as PasswordResetLinkController
     participant NPC as NewPasswordController
     participant DB as Database
     participant Email as Mail Service
 
-    User->>Router: GET /forgot-password
-    Router->>PRLC: create()
-    PRLC-->>User: Form input email
+    User->>PRLC: GET /forgot-password
+    PRLC-->>User: Form input surel
 
-    User->>Router: POST /forgot-password (email)
-    Router->>PRLC: store(Request)
-    PRLC->>DB: Cek email di tabel users
-
-    alt Email tidak terdaftar
-        PRLC-->>User: Pesan sukses palsu (keamanan: tidak reveal email)
-    else Email valid
+    User->>PRLC: POST /forgot-password (email)
+    PRLC->>DB: Verifikasi surel di tabel users
+    alt Surel tidak terdaftar
+        PRLC-->>User: Pesan sukses netral (keamanan)
+    else Surel valid
         PRLC->>DB: INSERT INTO password_reset_tokens
-        PRLC->>Email: Kirim link reset dengan token
-        Email-->>User: Email berisi /reset-password/{token}
-        PRLC-->>User: Link reset telah dikirim ke email Anda
+        PRLC->>Email: Kirim tautan reset berisi token
+        Email-->>User: Surel berisi /reset-password/{token}
+        PRLC-->>User: Konfirmasi pengiriman tautan
     end
 
-    User->>Router: GET /reset-password/{token}
-    Router->>NPC: create(token)
-    NPC-->>User: Form input password baru
+    User->>NPC: GET /reset-password/{token}
+    NPC-->>User: Form kata sandi baru
 
-    User->>Router: POST /reset-password (token, email, password, password_confirmation)
-    Router->>NPC: store(Request)
+    User->>NPC: POST /reset-password (token, email, password)
     NPC->>DB: Verifikasi token valid dan belum kedaluwarsa
-
     alt Token tidak valid
-        NPC-->>User: Error token tidak valid atau kedaluwarsa
+        NPC-->>User: Error token kedaluwarsa
     else Token valid
-        NPC->>DB: UPDATE users SET password = Hash(baru) WHERE email
-        NPC->>DB: DELETE FROM password_reset_tokens WHERE email
-        NPC-->>User: Redirect ke /login + Password berhasil direset
+        NPC->>DB: UPDATE users SET password = Hash::make(baru)
+        NPC->>DB: DELETE FROM password_reset_tokens
+        NPC-->>User: Redirect /login + notifikasi berhasil
     end
 ```
 
 ---
 
-## 13. Profil User
+## 13. Profil Pengguna
 
-### Deskripsi
-Halaman untuk mengelola data profil pengguna yang sudah login. Memiliki tiga fungsionalitas: (1) melihat & mengubah nama/email, (2) mengubah password, dan (3) menghapus akun. Jika email diubah, status verifikasi email direset.
+### Penjelasan
 
-### Aktor
-- **User (terautentikasi)** — Pengguna yang sudah login
-- **ProfileController** — Logika edit/update/delete profil
-- **Auth Facade** — Sesi autentikasi
-- **User Model** — Data pengguna
-- **Database** — Penyimpanan
+Halaman profil pengguna menyediakan antarmuka bagi pengguna yang telah terautentikasi untuk mengelola data akun mereka secara mandiri. Akses ke halaman ini dijaga oleh _middleware_ `auth`, yang secara otomatis mengalihkan pengguna yang belum terautentikasi ke halaman login. Halaman ini mengintegrasikan tiga fungsi utama dalam satu tampilan terpadu.
+
+Fungsi pertama adalah pemutakhiran informasi profil, di mana pengguna dapat mengubah nama dan alamat surel. Apabila surel diubah, atribut `email_verified_at` secara otomatis dikosongkan untuk mengharuskan pengguna melakukan verifikasi ulang terhadap surel baru. Fungsi kedua adalah penggantian kata sandi yang memerlukan verifikasi kata sandi lama sebelum kata sandi baru dapat disimpan. Fungsi ketiga adalah penghapusan akun secara permanen, yang mengharuskan pengguna mengonfirmasi kata sandi mereka sebelum operasi dieksekusi. Proses penghapusan akun mencakup _logout_ dari sesi aktif, penghapusan rekod pengguna dari basis data, serta invalidasi sesi dan pembaruan token CSRF untuk menjaga keamanan sistem.
 
 ### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-    actor User as User (Logged In)
+    actor User as User (Terautentikasi)
     participant Router as Laravel Router
     participant Middleware as Middleware auth
     participant PC as ProfileController
     participant UserM as User Model
     participant AuthFacade as Auth Facade
     participant DB as Database
-    participant View as profile/edit.blade.php
 
     User->>Router: GET /profile
-    Router->>Middleware: Cek auth session
+    Router->>Middleware: Verifikasi sesi auth
     alt Belum login
         Middleware-->>User: Redirect ke /login
     end
-
     Router->>PC: edit(Request)
-    PC->>View: view profile.edit dengan data user
-    View-->>User: Form edit profil
+    PC-->>User: Form edit profil
 
     User->>Router: PATCH /profile (name, email)
     Router->>PC: update(ProfileUpdateRequest)
-    PC->>PC: validate name dan email
-    PC->>UserM: fill data yang sudah tervalidasi
-    alt Email berubah
+    PC->>PC: validate()
+    alt Surel berubah
         PC->>UserM: email_verified_at = null
     end
     PC->>UserM: save()
     UserM->>DB: UPDATE users SET name, email WHERE id
-    PC-->>User: Redirect ke /profile + status profile-updated
+    PC-->>User: Redirect /profile + status profile-updated
 
     User->>Router: DELETE /profile (konfirmasi password)
     Router->>PC: destroy(Request)
@@ -681,30 +588,25 @@ sequenceDiagram
     PC->>AuthFacade: logout()
     PC->>UserM: delete()
     UserM->>DB: DELETE FROM users WHERE id
-    PC->>PC: session invalidate dan regenerateToken
+    PC->>PC: session invalidate + regenerateToken
     PC-->>User: Redirect ke /
 ```
 
 ---
 
-## 14. Admin Panel — Manajemen Produk
+## 14. Admin — Manajemen Produk
 
-### Deskripsi
-Halaman admin (dikelola oleh **Filament v3**) untuk mengelola produk. Admin dapat membuat produk baru dengan informasi: nama, slug (auto-generated dari nama), kategori, gambar, deskripsi, harga, harga diskon, stok, berat, dan meta SEO. Terdapat aksi cepat "Flash Sale" untuk toggle promosi.
+### Penjelasan
 
-### Aktor
-- **Admin** — Pengelola toko (harus login sebagai admin)
-- **Filament Framework** — UI & CRUD handler
-- **ProductResource** — Definisi resource
-- **Product Model** — Data produk
-- **Database** — Penyimpanan
-- **File Storage** — Penyimpanan gambar
+Halaman manajemen produk pada panel administrasi dibangun menggunakan **Filament v3**, sebuah _framework_ antarmuka administrasi berbasis Laravel yang menyediakan komponen CRUD secara deklaratif. Halaman ini hanya dapat diakses oleh pengguna dengan hak akses administrator, dan menampilkan seluruh rekod produk dalam format tabel yang dilengkapi dengan fitur pencarian, pengurutan, dan filter.
+
+Formulir penambahan produk baru diorganisasikan ke dalam tiga tab: tab *General* untuk informasi dasar produk (nama, slug otomatis, kategori, gambar, dan deskripsi), tab *Pricing & Stock* untuk data harga, harga diskon, stok, dan berat produk, serta tab *SEO* untuk pengisian meta judul dan meta deskripsi guna keperluan optimasi mesin pencari. Slug produk dibangkitkan secara otomatis dari nama produk menggunakan fungsi `Str::slug()` pada saat operasi pembuatan. Berkas gambar yang diunggah disimpan ke direktori `products` pada sistem penyimpanan lokal. Tersedia pula aksi khusus _Flash Sale_ yang dapat diaktifkan oleh administrator untuk menandai produk tertentu sebagai produk promosi. Operasi pembaruan data produk mengikuti alur yang serupa dengan pembuatan, namun menggunakan metode HTTP PATCH untuk memperbarui rekod yang telah ada.
 
 ### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-    actor Admin as Admin User
+    actor Admin as Administrator
     participant Filament as Filament Panel
     participant PR as ProductResource
     participant ProductM as Product Model
@@ -712,64 +614,52 @@ sequenceDiagram
     participant Storage as File Storage
 
     Admin->>Filament: GET /admin/products
-    Filament->>PR: table() — build kolom dan actions
-    PR->>ProductM: all() dengan filter/sort/search
-    ProductM->>DB: SELECT products WITH category
-    DB-->>ProductM: Daftar produk
-    ProductM-->>Filament: Data tabel
+    Filament->>PR: table()
+    PR->>DB: SELECT products WITH category
+    DB-->>Filament: Daftar produk
     Filament-->>Admin: Tabel produk (nama, kategori, harga, stok)
 
     Admin->>Filament: GET /admin/products/create
-    Filament->>PR: form() — tabs: General, Pricing, SEO
-    Filament-->>Admin: Form tambah produk
+    Filament->>PR: form() — tabs General, Pricing, SEO
+    Filament-->>Admin: Formulir tambah produk
 
-    Admin->>Filament: POST (name, slug, category_id, image, price, stock, dll)
-    Filament->>Filament: Validate required fields
+    Admin->>Filament: POST (data produk lengkap)
+    Filament->>Filament: Validasi field wajib
     alt Ada upload gambar
         Filament->>Storage: Simpan ke direktori products
-        Storage-->>Filament: Path gambar
+        Storage-->>Filament: Path berkas gambar
     end
     Filament->>ProductM: create(data)
     ProductM->>DB: INSERT INTO products
-    DB-->>ProductM: Product baru + ID
-    Filament-->>Admin: Redirect + notifikasi Product created
+    DB-->>ProductM: Produk baru + ID
+    Filament-->>Admin: Redirect + notifikasi berhasil
 
     Admin->>Filament: GET /admin/products/{id}/edit
-    Filament->>DB: SELECT product WHERE id
+    Filament->>DB: SELECT product WHERE id=?
     DB-->>Filament: Data produk
-    Filament-->>Admin: Form edit terisi
+    Filament-->>Admin: Formulir edit terisi
 
-    Admin->>Filament: PATCH data yang diubah
-    Filament->>ProductM: update data
+    Admin->>Filament: PATCH (data yang diubah)
+    Filament->>ProductM: update(data)
     ProductM->>DB: UPDATE products SET ... WHERE id
-    Filament-->>Admin: Redirect + notifikasi Product updated
-
-    Admin->>Filament: Klik Flash Sale
-    Filament->>PR: action toggle_flash_sale
-    Filament-->>Admin: Notifikasi Flash Sale Toggled
+    Filament-->>Admin: Redirect + notifikasi tersimpan
 ```
 
 ---
 
-## 15. Admin Panel — Manajemen Pesanan
+## 15. Admin — Manajemen Pesanan
 
-### Deskripsi
-Halaman terpenting dalam proses bisnis. Admin dapat melihat semua pesanan dan mengelola status melalui alur: `pending → processing → shipped → completed`. Setiap perubahan status penting dikirimkan notifikasi **WhatsApp otomatis** ke nomor pelanggan menggunakan **FonnteService**.
+### Penjelasan
 
-### Aktor
-- **Admin** — Pengelola toko
-- **Filament Framework** — UI & CRUD
-- **OrderResource** — Definisi resource
-- **Order Model** — Data pesanan
-- **FonnteService** — Kirim WhatsApp
-- **Setting Model** — Info rekening bank
-- **Database** — Penyimpanan
+Halaman manajemen pesanan merupakan komponen paling vital dalam operasional bisnis toko online Ivo Karya. Halaman ini memungkinkan administrator untuk memantau seluruh pesanan yang masuk dan mengelola perpindahan status pesanan melalui alur yang telah ditetapkan: `pending` → `processing` → `shipped` → `completed`. Setiap transisi status yang signifikan diiringi dengan pengiriman notifikasi otomatis melalui layanan WhatsApp kepada pelanggan menggunakan **FonnteService**.
+
+Pada saat administrator mengonfirmasi pesanan dari status `pending` ke `processing`, sistem secara bersamaan mengambil informasi rekening bank dari tabel pengaturan (_settings_) dan menyusun pesan WhatsApp yang berisi detail pesanan beserta instruksi pembayaran, kemudian mengirimkannya ke nomor telepon pelanggan. Pada tahap berikutnya, ketika administrator memasukkan nomor resi pengiriman, status pesanan diperbarui menjadi `shipped` dan sistem secara otomatis mengirimkan pesan WhatsApp yang memuat nomor resi serta tautan pelacakan pesanan yang unik kepada pelanggan. Mekanisme notifikasi otomatis ini bertujuan untuk meningkatkan transparansi proses pengiriman dan kepuasan pelanggan.
 
 ### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-    actor Admin as Admin User
+    actor Admin as Administrator
     participant Filament as Filament Panel
     participant OR as OrderResource
     participant OrderM as Order Model
@@ -783,53 +673,42 @@ sequenceDiagram
     DB-->>Filament: Daftar pesanan + badge status
     Filament-->>Admin: Tabel pesanan (ID, Customer, Total, Status)
 
-    Admin->>Filament: Klik Konfirmasi pada order pending
-    Filament->>OR: action confirm
-    OR->>OrderM: update status = processing
-    OrderM->>DB: UPDATE orders SET status=processing WHERE id
-
-    OR->>Setting: where key=bank_account_info value
+    Admin->>Filament: Klik Konfirmasi (status: pending)
+    OR->>OrderM: update(['status'=>'processing'])
+    OrderM->>DB: UPDATE orders SET status=processing
+    OR->>Setting: get('bank_account_info')
     Setting->>DB: SELECT value FROM settings WHERE key=bank_account_info
     DB-->>Setting: Info rekening bank
-    OR->>OR: Buat pesan WA konfirmasi (pesanan, total, rekening)
-
-    OR->>Fonnte: send(customer_phone, pesan konfirmasi)
+    OR->>Fonnte: send(phone, pesan konfirmasi + info bayar)
     Fonnte-->>OR: Response API
-    Filament-->>Admin: Notifikasi Tagihan Terkirim ke WA User
+    Filament-->>Admin: Notifikasi WA terkirim
 
-    Admin->>Filament: Klik Kirim Resi pada order processing
-    Filament->>OR: action ship — tampilkan form nomor resi
-    Admin->>Filament: Input nomor resi + submit
-
-    OR->>OrderM: update status=shipped, tracking_number=resi
-    OrderM->>DB: UPDATE orders SET status=shipped, tracking_number
-
-    OR->>OR: Buat URL tracking via route order.track token
-    OR->>OR: Buat pesan WA resi + URL tracking
-    OR->>Fonnte: send(customer_phone, pesan resi)
+    Admin->>Filament: Klik Kirim Resi (status: processing)
+    Filament-->>Admin: Formulir input nomor resi
+    Admin->>Filament: Submit nomor resi
+    OR->>OrderM: update(['status'=>'shipped', 'tracking_number'=>resi])
+    OrderM->>DB: UPDATE orders SET status=shipped, tracking_number=?
+    OR->>OR: Buat URL pelacakan via route('order.track', token)
+    OR->>Fonnte: send(phone, pesan resi + URL pelacakan)
     Fonnte-->>OR: Response API
-    Filament-->>Admin: Notifikasi Resi Terkirim ke WA User
+    Filament-->>Admin: Notifikasi resi WA terkirim
 ```
 
 ---
 
-## 16. Admin Panel — Manajemen Ulasan
+## 16. Admin — Manajemen Ulasan
 
-### Deskripsi
-Halaman moderasi ulasan produk. Admin dapat melihat semua ulasan yang masuk dan menyetujui atau menghapusnya. Ulasan yang belum disetujui (`is_approved = false`) tidak akan tampil di halaman produk publik.
+### Penjelasan
 
-### Aktor
-- **Admin** — Moderator konten
-- **Filament Framework** — UI admin panel
-- **ReviewResource** — Definisi resource
-- **Review Model** — Data ulasan
-- **Database** — Penyimpanan
+Halaman manajemen ulasan pada panel administrasi berfungsi sebagai antarmuka moderasi konten yang memungkinkan administrator untuk meninjau, menyetujui, atau menghapus ulasan produk yang dikirimkan oleh pelanggan. Sistem ulasan pada aplikasi ini menerapkan mekanisme persetujuan (_approval_) sebelum ulasan ditampilkan kepada publik, yang dikendalikan melalui atribut `is_approved` pada tabel ulasan.
+
+Seluruh ulasan, baik yang telah maupun belum mendapat persetujuan, ditampilkan dalam tabel administrasi beserta informasi produk yang diulas, nama pelanggan, nilai rating bintang, isi komentar, dan status persetujuan. Administrator dapat mengubah status persetujuan ulasan secara individual melalui aksi toggle, yang akan memperbarui nilai atribut `is_approved` di basis data. Hanya ulasan dengan nilai `is_approved = true` yang akan ditampilkan pada halaman detail produk yang dapat diakses oleh publik. Selain itu, administrator juga memiliki kewenangan untuk menghapus ulasan secara permanen apabila konten ulasan tersebut dinilai tidak sesuai dengan kebijakan toko.
 
 ### Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-    actor Admin as Admin User
+    actor Admin as Administrator
     participant Filament as Filament Panel
     participant RR as ReviewResource
     participant ReviewM as Review Model
@@ -838,15 +717,14 @@ sequenceDiagram
     Admin->>Filament: GET /admin/reviews
     Filament->>RR: table()
     RR->>DB: SELECT reviews WITH product, user ORDER BY created_at DESC
-    DB-->>Filament: Semua ulasan (sudah dan belum disetujui)
+    DB-->>Filament: Seluruh ulasan (disetujui & belum)
     Filament-->>Admin: Tabel ulasan (nama, produk, rating, komentar, status)
 
-    Admin->>Filament: Klik Setujui / Toggle is_approved
-    Filament->>RR: action update is_approved
-    RR->>ReviewM: update is_approved = true
-    ReviewM->>DB: UPDATE reviews SET is_approved=1 WHERE id
+    Admin->>Filament: Toggle is_approved
+    Filament->>ReviewM: update(['is_approved' => true/false])
+    ReviewM->>DB: UPDATE reviews SET is_approved=? WHERE id
     DB-->>Filament: Updated
-    Filament-->>Admin: Perubahan tersimpan
+    Filament-->>Admin: Status ulasan diperbarui
 
     Admin->>Filament: Klik Hapus
     Filament->>ReviewM: delete()
@@ -859,14 +737,11 @@ sequenceDiagram
 
 ## 17. API Shipping
 
-### Deskripsi
-Endpoint API internal yang digunakan oleh halaman Cart/Checkout untuk menghitung ongkos kirim secara real-time. Mengintegrasikan layanan **RajaOngkir** untuk data wilayah (provinsi & kota) dan kalkulasi biaya pengiriman. Terdapat juga fitur **reverse geocode** untuk mendapatkan alamat dari koordinat GPS.
+### Penjelasan
 
-### Aktor
-- **Browser/JavaScript** — Request fetch/axios dari halaman cart
-- **ShippingController** — Handler API
-- **RajaOngkir API** — Layanan data wilayah & tarif
-- **GeoCoding Service** — Reverse geocode koordinat
+Modul API pengiriman merupakan lapisan integrasi antara sistem toko online dengan layanan pihak ketiga **RajaOngkir** yang menyediakan data wilayah administratif Indonesia dan kalkulasi tarif ongkos kirim secara _real-time_. API ini beroperasi pada rute internal dengan prefiks `/api/shipping` dan diakses secara langsung oleh kode JavaScript pada sisi klien melalui permintaan asinkronus (`fetch` / `axios`) dari halaman keranjang belanja.
+
+Sistem menyediakan lima _endpoint_ yang saling berkaitan. Pertama, _endpoint_ pengambilan daftar provinsi yang menginterogasi API RajaOngkir untuk mendapatkan seluruh data provinsi di Indonesia. Kedua, _endpoint_ pengambilan kota berdasarkan identitas provinsi. Ketiga, _endpoint_ pencarian kota berdasarkan kode pos yang mempermudah pengguna dalam mengidentifikasi kota tujuan pengiriman. Keempat, _endpoint_ kalkulasi biaya pengiriman yang menerima parameter asal, tujuan, berat total paket, dan nama kurir untuk menghasilkan daftar layanan beserta tarifnya. Kelima, _endpoint_ _reverse geocoding_ yang mengonversi koordinat GPS (lintang dan bujur) yang diperoleh dari perangkat pengguna menjadi informasi alamat yang dapat dibaca manusia, guna membantu pengisian alamat pengiriman secara otomatis.
 
 ### Sequence Diagram
 
@@ -882,95 +757,52 @@ sequenceDiagram
     Router->>SC: getProvinces()
     SC->>RO: GET rajaongkir.com/starter/province
     RO-->>SC: JSON daftar provinsi
-    SC-->>JS: Response JSON provinsi
+    SC-->>JS: Response provinsi
 
-    JS->>Router: GET /api/shipping/cities?province_id=32
+    JS->>Router: GET /api/shipping/cities?province_id=?
     Router->>SC: getCities(Request)
-    SC->>RO: GET /starter/city?province=32
+    SC->>RO: GET /starter/city?province={id}
     RO-->>SC: JSON daftar kota
-    SC-->>JS: Response JSON kota
+    SC-->>JS: Response kota
 
     JS->>Router: POST /api/shipping/find-city (postal_code)
     Router->>SC: findCityByPostalCode(Request)
-    SC->>RO: Query kota berdasarkan kode pos
+    SC->>RO: Query kota by kode pos
     RO-->>SC: Data kota cocok
-    SC-->>JS: JSON city_id, city_name, province
+    SC-->>JS: JSON {city_id, city_name, province}
 
-    JS->>Router: POST /api/shipping/cost (origin, destination, weight, courier)
+    JS->>Router: POST /api/shipping/cost (origin, dest, weight, courier)
     Router->>SC: calculateCost(Request)
     SC->>RO: POST /starter/cost
     RO-->>SC: JSON tarif per layanan
-    SC-->>JS: Daftar opsi kurir + biaya
+    SC-->>JS: Daftar kurir + biaya ongkir
 
     JS->>Router: POST /api/shipping/geocode (latitude, longitude)
     Router->>SC: reverseGeocode(Request)
-    SC->>Geo: Request alamat dari koordinat GPS
+    SC->>Geo: Konversi koordinat ke alamat
     Geo-->>SC: Nama jalan, kecamatan, kota
     SC-->>JS: JSON informasi lokasi
 ```
 
 ---
 
-## Diagram Alur Sistem Keseluruhan
-
-### Customer Journey (Alur Pembelian)
-
-```mermaid
-sequenceDiagram
-    actor Guest as Pengunjung/Guest
-    actor Customer as Pelanggan (Login)
-
-    Note over Guest: Masuk ke website
-    Guest->>Guest: Beranda — Lihat produk dan artikel terbaru
-    Guest->>Guest: Katalog — Filter dan telusuri produk
-    Guest->>Guest: Detail Produk — Lihat info lengkap dan ulasan
-    Guest->>Guest: Tambah ke Keranjang (session)
-    Guest->>Guest: Cart — Review item, pilih kurir dan hitung ongkir
-    Guest->>Guest: Checkout — Isi data diri dan pilih metode bayar
-    Guest->>Guest: Order dibuat, stok berkurang, cart dikosongkan
-    Guest->>Guest: Tracking Page — Lihat status pesanan real-time
-    Guest->>Customer: Opsional Register/Login untuk ulasan
-    Customer->>Customer: Tulis ulasan produk yang sudah dibeli
-    Customer->>Customer: Konfirmasi terima pesanan
-```
-
-### Admin Workflow
-
-```mermaid
-sequenceDiagram
-    actor Admin as Admin/Pemilik Toko
-
-    Admin->>Admin: Login ke /admin (Filament Panel)
-    Admin->>Admin: Dashboard — ringkasan penjualan dan pesanan
-    Admin->>Admin: Kelola Produk — tambah, edit, hapus, set harga
-    Admin->>Admin: Kelola Kategori — organisasi produk
-    Admin->>Admin: Kelola Artikel — konten blog dan pemasaran
-    Admin->>Admin: Lihat Pesanan Masuk (status: pending)
-    Admin->>Admin: Konfirmasi Pesanan → status: processing + notif WA
-    Admin->>Admin: Input Nomor Resi → status: shipped + notif WA tracking URL
-    Admin->>Admin: Moderasi Ulasan — approve atau hapus
-    Admin->>Admin: Pengaturan — info rekening bank, setting toko
-```
-
----
-
 ## Catatan Teknis
 
-| Aspek | Detail |
-|-------|--------|
+| Aspek | Keterangan |
+|-------|-----------|
 | **Framework** | Laravel 10 + Filament v3 + Livewire 3 |
 | **Autentikasi** | Laravel Breeze (session-based) |
-| **Session Cart** | PHP Session — tidak perlu login untuk belanja |
-| **Transaksi DB** | `DB::beginTransaction()` pada proses checkout |
-| **WhatsApp Notif** | Fonnte API — kirim WA saat konfirmasi dan pengiriman resi |
-| **Shipping API** | RajaOngkir Starter Plan (provinsi, kota, tarif) |
-| **Real-time Reviews** | Livewire component (ProductReviews) |
-| **Admin Panel** | Filament v3 Resources (Product, Order, Category, Article, Review, Setting) |
-| **File Storage** | Laravel Storage `storage/app/public` — gambar produk dan ulasan |
-| **Tracking Token** | `bin2hex(random_bytes(16))` — 32 karakter hex unik per order |
-| **Route Model Binding** | Produk dan artikel diakses by slug (SEO-friendly URL) |
+| **Penyimpanan Keranjang** | PHP Session — tidak memerlukan autentikasi |
+| **Transaksi Basis Data** | `DB::beginTransaction()` pada proses checkout |
+| **Notifikasi WhatsApp** | Fonnte API — dipicu saat konfirmasi & pengiriman resi |
+| **Integrasi Ongkir** | RajaOngkir Starter Plan |
+| **Komponen Real-time** | Livewire 3 — `ProductReviews` component |
+| **Panel Admin** | Filament v3 Resources (Product, Order, Category, Article, Review, Setting) |
+| **Penyimpanan Berkas** | Laravel Storage `storage/app/public` |
+| **Token Pelacakan** | `bin2hex(random_bytes(16))` — 32 karakter heksadesimal unik |
+| **URL Produk & Artikel** | Route Model Binding berbasis `slug` (SEO-friendly) |
 
 ---
 
-*Dokumentasi ini dibuat berdasarkan analisis kode sumber proyek WEBSITE-IVO-KARYA.*  
+*Dokumentasi ini disusun berdasarkan hasil analisis mendalam terhadap kode sumber proyek WEBSITE-IVO-KARYA.*  
 *Dibuat oleh: Sistem Dokumentasi Antigravity AI — 2 April 2026*
