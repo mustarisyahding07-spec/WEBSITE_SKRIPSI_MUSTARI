@@ -1,0 +1,160 @@
+<?xml version="1.0" ?>
+<mxGraphModel background="#ffffff">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- JUDUL -->
+    <mxCell id="title" value="Gambar 4.17 – Activity Diagram Pengaturan Sistem"
+      style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="0" y="10" width="700" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- START -->
+    <mxCell id="A1" value="START"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="60" width="50" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin -->
+    <mxCell id="A2" value="Membuka Halaman
+Pengaturan"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="110" y="60" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Database -->
+    <mxCell id="D1" value="Memuat Konfigurasi
+dari Tabel Settings"
+      style="shape=mxgraph.flowchart.database;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;boundedLbl=1;backgroundOutline=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="280" y="65" width="140" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin -->
+    <mxCell id="A3" value="Melihat Form
+Pengaturan"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="450" y="65" width="120" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Decision: Edit Pengaturan? -->
+    <mxCell id="S1" value="Edit
+Pengaturan?"
+      style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="178" width="120" height="80" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin: Input Nilai Baru -->
+    <mxCell id="A4" value="Memasukkan
+Nilai Baru"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="180" y="190" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin: Klik Simpan -->
+    <mxCell id="A5" value="Klik
+Simpan"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="190" width="120" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Proses Sistem: Validasi -->
+    <mxCell id="S2" value="Validasi
+Nilai Input"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="500" y="190" width="120" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Decision: Nilai Valid? -->
+    <mxCell id="S3" value="Nilai
+Valid?"
+      style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="303" width="110" height="80" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin: Pesan Error -->
+    <mxCell id="A6" value="Melihat
+Pesan Error"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="170" y="316" width="130" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Database: Simpan Pengaturan -->
+    <mxCell id="D2" value="Menyimpan Nilai
+ke Tabel Settings"
+      style="shape=mxgraph.flowchart.database;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;boundedLbl=1;backgroundOutline=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="330" y="308" width="140" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Admin: Notifikasi Sukses -->
+    <mxCell id="A7" value="Melihat Notifikasi
+Sukses"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="500" y="316" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- END (tidak edit / setelah notif) -->
+    <mxCell id="A8" value="END"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="430" width="50" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- EDGES -->
+    <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A1" target="A2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A2" target="D1" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="D1" target="A3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A3" target="S1" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e5" value="Ya" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S1" target="A4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A4" target="A5" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A5" target="S2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S2" target="S3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e9" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S3" target="A6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A6" target="A4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e11" value="Ya" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S3" target="D2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="D2" target="A7" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A7" target="A8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e14" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S1" target="A8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

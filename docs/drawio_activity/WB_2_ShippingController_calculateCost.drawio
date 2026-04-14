@@ -1,0 +1,218 @@
+<?xml version="1.0" ?>
+<mxGraphModel background="#ffffff">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- JUDUL -->
+    <mxCell id="title" value="Flowgraph – ShippingController::calculateCost()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="0" y="10" width="700" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== JALUR UTAMA: Node 1 → 5 ====== -->
+    <mxCell id="n1" value="1"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="60" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n2" value="2"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="145" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n3" value="3"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="230" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n4" value="4"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="315" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n5" value="5"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="400" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 6: Decision response.successful() -->
+    <mxCell id="n6" value="6"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="485" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 7: response sukses → parse JSON -->
+    <mxCell id="n7" value="7"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="570" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 8: Decision isset(calculate) -->
+    <mxCell id="n8" value="8"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="655" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 9: Return sukses dengan data (cabang True dari node 8) -->
+    <mxCell id="n9" value="9"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="160" y="655" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 10: Return sukses data kosong (cabang False dari node 8) -->
+    <mxCell id="n10" value="10"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="470" y="655" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 11: Return gagal (cabang False dari node 6) -->
+    <mxCell id="n11" value="11"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="160" y="485" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 12: catch Exception -->
+    <mxCell id="n12" value="12"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="550" y="315" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 13: Return error exception -->
+    <mxCell id="n13" value="13"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="550" y="400" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== LABEL KETERANGAN ====== -->
+    <mxCell id="l1" value="calculateCost() start"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="68" width="170" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l2" value="Log::info() - log request"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="153" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l3" value="validate($request)"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="238" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l4" value="Build API payload"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="323" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l5" value="Http::post() ke API kurir"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="408" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l6" value="if ($response-&gt;successful())"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="493" width="185" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l7" value="$data = $response-&gt;json()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="578" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l8" value="if (isset($data[calculate]))"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="365" y="663" width="185" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l9" value="Return sukses + data"
+      style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="15" y="663" width="138" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l10" value="Return sukses + []"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="525" y="663" width="140" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l11" value="Return error 500"
+      style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="15" y="493" width="138" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l12" value="catch Exception"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="605" y="323" width="130" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l13" value="Return error message"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="605" y="408" width="140" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== EDGES ====== -->
+    <!-- Alur linear atas ke bawah -->
+    <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n1" target="n2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n2" target="n3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n3" target="n4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n4" target="n5" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n5" target="n6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 6 → 7 (True: successful) -->
+    <mxCell id="e6" value="T" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n6" target="n7" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 6 → 11 (False: tidak successful) -->
+    <mxCell id="e7" value="F" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n6" target="n11" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n7" target="n8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 8 → 9 (True: ada data) -->
+    <mxCell id="e9" value="T" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n8" target="n9" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 8 → 10 (False: tidak ada data) -->
+    <mxCell id="e10" value="F" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n8" target="n10" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Exception: Node 4 → 12 (putus-putus) -->
+    <mxCell id="e11" value="exception" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;dashed=1;" edge="1" source="n4" target="n12" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n12" target="n13" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

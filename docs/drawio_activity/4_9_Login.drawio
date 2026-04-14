@@ -1,0 +1,171 @@
+<?xml version="1.0" ?>
+<mxGraphModel background="#ffffff">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- JUDUL -->
+    <mxCell id="title" value="Gambar 4.9 – Activity Diagram Login"
+      style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="0" y="10" width="700" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- START -->
+    <mxCell id="A1" value="START"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="60" width="50" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna -->
+    <mxCell id="A2" value="Membuka
+Halaman Login"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="110" y="60" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Proses Sistem -->
+    <mxCell id="S1" value="Memeriksa
+Status Sesi"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="280" y="60" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Decision: Sudah Login? -->
+    <mxCell id="S2" value="Sudah
+Login?"
+      style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="450" y="55" width="110" height="80" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna: Redirect Dashboard -->
+    <mxCell id="A3" value="Redirect ke
+Dashboard"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="590" y="70" width="80" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Proses Sistem: Tampilkan Form -->
+    <mxCell id="S3" value="Menampilkan
+Form Login"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="178" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna: Input Kredensial -->
+    <mxCell id="A4" value="Memasukkan Email
+dan Password"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="200" y="178" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna: Klik Login -->
+    <mxCell id="A5" value="Klik Tombol
+Login"
+      style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=20;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="370" y="178" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Proses Sistem: Validasi -->
+    <mxCell id="S4" value="Memvalidasi
+Kredensial"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="540" y="178" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Decision: Kredensial Valid? -->
+    <mxCell id="S5" value="Kredensial
+Valid?"
+      style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="290" width="110" height="80" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna: Pesan Error -->
+    <mxCell id="A6" value="Melihat
+Pesan Error"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="170" y="303" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Proses Sistem: Buat Sesi -->
+    <mxCell id="S6" value="Membuat Sesi
+dan Redirect"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="340" y="303" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- Aksi Pengguna: Masuk Dashboard -->
+    <mxCell id="A7" value="Masuk ke
+Dashboard"
+      style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;"
+      vertex="1" parent="1">
+      <mxGeometry x="510" y="303" width="140" height="55" as="geometry"/>
+    </mxCell>
+
+    <!-- END -->
+    <mxCell id="A8" value="END"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="300" y="415" width="50" height="50" as="geometry"/>
+    </mxCell>
+
+    <!-- EDGES -->
+    <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A1" target="A2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A2" target="S1" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S1" target="S2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e4" value="Ya" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S2" target="A3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A3" target="A8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e6" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S2" target="S3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S3" target="A4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A4" target="A5" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e9" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A5" target="S4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S4" target="S5" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e11" value="Tidak" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S5" target="A6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A6" target="A4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e13" value="Ya" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S5" target="S6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e14" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="S6" target="A7" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="A7" target="A8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>

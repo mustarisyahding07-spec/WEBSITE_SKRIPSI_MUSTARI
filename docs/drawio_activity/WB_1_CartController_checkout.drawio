@@ -1,0 +1,323 @@
+<?xml version="1.0" ?>
+<mxGraphModel background="#ffffff">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- JUDUL -->
+    <mxCell id="title" value="Flowgraph – CartController::checkout()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=13;fontStyle=1;"
+      vertex="1" parent="1">
+      <mxGeometry x="0" y="10" width="760" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== BARIS 1: Node 1, 2, 3 ====== -->
+    <mxCell id="n1" value="1"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="60" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n2" value="2"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="140" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n3" value="3"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="220" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 4: Error (cabang True dari node 3) -->
+    <mxCell id="n4" value="4"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="200" y="220" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 5 (cabang False dari node 3) -->
+    <mxCell id="n5" value="5"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="300" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 6 -->
+    <mxCell id="n6" value="6"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="380" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 7: Loop -->
+    <mxCell id="n7" value="7"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="460" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 8 -->
+    <mxCell id="n8" value="8"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="540" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 9: Decision stok -->
+    <mxCell id="n9" value="9"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="620" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 10: Error stok (cabang True dari node 9) -->
+    <mxCell id="n10" value="10"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="200" y="620" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 11: Error return (cabang True lanjutan) -->
+    <mxCell id="n11" value="11"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="200" y="700" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 12: Decrement stok (cabang False dari node 9) -->
+    <mxCell id="n12" value="12"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="500" y="620" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== BARIS BAWAH: Node 13-16 (sukses) ====== -->
+    <mxCell id="n13" value="13"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="720" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n14" value="14"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="800" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n15" value="15"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="880" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n16" value="16"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="350" y="960" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== CABANG EXCEPTION: Node 17-19 ====== -->
+    <mxCell id="n17" value="17"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="550" y="380" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n18" value="18"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="550" y="460" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="n19" value="19"
+      style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;fontStyle=1;fontSize=12;"
+      vertex="1" parent="1">
+      <mxGeometry x="550" y="540" width="45" height="45" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== LABEL KETERANGAN NODE ====== -->
+    <mxCell id="l1" value="checkout() start"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="68" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l2" value="Get cart from session"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="148" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l3" value="if (empty($cart))"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="228" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l4" value="Return error: kosong"
+      style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="228" width="164" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l5" value="Validate request"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="308" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l6" value="DB::beginTransaction()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="388" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l7" value="foreach ($cart as $item)"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="468" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l8" value="Find product lockForUpdate"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="548" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l9" value="if (stock &lt; quantity)"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="628" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l10" value="DB::rollBack()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="628" width="164" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l11" value="Return error: stok"
+      style="text;html=1;strokeColor=none;fillColor=none;align=right;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="30" y="708" width="164" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l12" value="Decrement stock"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="555" y="628" width="140" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l13" value="Order::create()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="728" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l14" value="DB::commit()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="808" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l15" value="session()-&gt;forget('cart')"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="888" width="175" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l16" value="Redirect to tracking"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="405" y="968" width="160" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l17" value="catch Exception"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="605" y="388" width="140" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l18" value="DB::rollBack()"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="605" y="468" width="140" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="l19" value="Return error: exception"
+      style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="605" y="548" width="160" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ====== EDGES ====== -->
+    <!-- Alur utama atas ke bawah -->
+    <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n1" target="n2" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n2" target="n3" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 3 → 4 (True: kosong) -->
+    <mxCell id="e3" value="T" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n3" target="n4" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 3 → 5 (False) -->
+    <mxCell id="e4" value="F" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n3" target="n5" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n5" target="n6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n6" target="n7" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n7" target="n8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n8" target="n9" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 9 → 10 (True: stok kurang) -->
+    <mxCell id="e9" value="T" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n9" target="n10" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n10" target="n11" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 9 → 12 (False: stok OK) -->
+    <mxCell id="e11" value="F" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n9" target="n12" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Node 12 → 7 (loop back) -->
+    <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="n12" target="n7" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="655" y="643"/>
+          <mxPoint x="655" y="483"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Node 7 → 13 (loop done) -->
+    <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n7" target="n13" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="290" y="483"/>
+          <mxPoint x="290" y="743"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="e14" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n13" target="n14" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n14" target="n15" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e16" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n15" target="n16" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Cabang Exception: Node 6 → 17 (putus-putus) -->
+    <mxCell id="e17" value="exception" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;dashed=1;" edge="1" source="n6" target="n17" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e18" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n17" target="n18" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e19" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;fillColor=#000000;strokeColor=#000000;" edge="1" source="n18" target="n19" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>
