@@ -1,0 +1,12 @@
+[variables]
+# Memberitahu Railway bahwa folder public adalah root document untuk web server
+NIXPACKS_PHP_ROOT_DIR = "public"
+
+[phases.build]
+# Perintah ini dijalankan saat proses build di server Railway.
+# Kita perlu menginstall dependency (composer dan npm) lalu mem-build aset frontend (Vite/Tailwind).
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "npm ci",
+    "npm run build"
+]
