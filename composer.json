@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.3",
         "ext-intl": "*",
+        "ext-pdo_mysql": "*",
         "ext-zip": "*",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.0",
