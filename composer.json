@@ -9,9 +9,9 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-intl": "*",
-        "ext-zip": "^1.22",
+        "ext-zip": "*",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9"
